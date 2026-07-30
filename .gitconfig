@@ -56,7 +56,7 @@
     sa = stash-apply-patch
 
     sd = stash show --patch
-    sp = stash push --patch
+    sp = stash push --patch --unified=2 --inter-hunk-context=2
     spop = stash pop
 
     # diff commands
