@@ -35,6 +35,11 @@ function upgradeProject {
 
 # Node and javascript
 cd ~/js-scripts/ || exit 1
+printf '%b' "$Gray" "\nGlobal packages:"$'\n' "$NORMAL"
+npm upgrade --global --min-release-age 4 &
+getPIDAndWait
+echo
+termux-fix-shebang "$PREFIX/bin/npm"
 upgradeProject project/ &
 getPIDAndWait
 
