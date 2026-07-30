@@ -11,6 +11,9 @@ au! BufRead */.vim-colors set syntax=vim
 "set list
 set lcs+=space:·,eol:⤶
 
+" Case insensitivity for filenames/directories
+set fileignorecase
+
 " Sets when to start to scroll above/below
 set scrolloff=3
 
@@ -484,11 +487,7 @@ augroup javascript_folding
 augroup END
 
 " GitGutter
-set signcolumn=number
 let g:gitgutter_highlight_linenrs = 1
-highlight GitGutterAddLine    ctermfg=7   ctermbg=22
-highlight GitGutterChangeLine ctermfg=163 ctermbg=18
-highlight GitGutterDeleteLine ctermfg=1
 
 " Airline settings
 let g:airline_extensions = []

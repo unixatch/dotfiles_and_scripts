@@ -46,8 +46,11 @@ highlight CursorLineNr cterm=NONE guibg=#0b0b5f guifg=#cccccc "#c2c227
 
 " GitGutter
 highlight GitGutterAdd ctermbg=242 guifg=#bbbbbb guibg=#002920
+highlight GitGutterAddLine ctermfg=7 ctermbg=22
 highlight GitGutterChange guifg=#bbbbbb guibg=#111122
+highlight GitGutterChangeLine ctermfg=163 ctermbg=18
 highlight GitGutterDelete guifg=#bbbbbb guibg=#290000
+highlight GitGutterDeleteLine ctermfg=1
 "highlight GitGutterChangeDeleteLineNr */
 
 " Different CursorLine so that it's easier

@@ -223,7 +223,6 @@ noremap <c-d> :quit<cr>
 
 " ————————— PLUGINS —————————
 noremap gi :GitGutterLineHighlightsToggle<CR>
-noremap Gi :GitGutterFold<CR>
 func ShowHunkList()
     GitGutterQuickFixCurrentFile
     tab copen
