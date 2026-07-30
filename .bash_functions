@@ -579,9 +579,9 @@ storageUsed() {
     local total     totPrecStart   \
           used      usedPrecStart  \
           available availPrecStart
-    total=$((     storage[1] * 10000 / 100 / 1024 ** 2 ))
-    used=$((      storage[2] * 10000 / 100 / 1024 ** 2 ))
-    available=$(( storage[3] * 10000 / 100 / 1024 ** 2 ))
+    total=$((     storage[1] * 10000 / 100 / 1000 ** 2 ))
+    used=$((      storage[2] * 10000 / 100 / 1000 ** 2 ))
+    available=$(( storage[3] * 10000 / 100 / 1000 ** 2 ))
     totPrecStart=$((   ${#total}     - 2 ))
     usedPrecStart=$((  ${#used}      - 2 ))
     availPrecStart=$(( ${#available} - 2 ))
