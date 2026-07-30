@@ -52,8 +52,8 @@ ${
     # shellcheck disable=SC2016
     local EXIT_CODE='\[\033[31;4m\]${ promptExitCode $? && printf "\[\033[0m\] "; }\[\033[0m\]'
     local NORMAL='\[\033[0m\]'
-    local RED='\[\033[1;91m\]'
-    local GREEN='\[\033[0;32m\]'
+    local START_COLOR='\[\033[48;2;0;0;100;38;2;227;227;227m\]'
+    local CLOSING_COLOR='\[\033[0;38;2;0;0;100m\]'
     local DEFAULT_CURSOR_SHAPE='\[\033[5 q\]'
 
     local terminalPrompt=(
@@ -65,9 +65,9 @@ ${
 
         # Visible prompt
         "$EXIT_CODE"
-        "$RED\w$NORMAL/"
+        "$START_COLOR \w/$NORMAL$START_COLOR"
 
-        "$GREEN\$$NORMAL$DEFAULT_CURSOR_SHAPE "
+        "$DEFAULT_CURSOR_SHAPE $CLOSING_COLOR$NORMAL "
     )
     IFS=
     PS1="${terminalPrompt[*]}"
@@ -97,6 +97,7 @@ export PAGER="less \
     --use-color \
     --RAW-CONTROL-CHARS \
 "
+export HISTIGNORE="giy*:git shoe*:git f:cld:c"
 export HISTFILESIZE=2500
 export HISTSIZE=2500
 # To keep \n
