@@ -72,6 +72,19 @@ ${
     IFS=
     PS1="${terminalPrompt[*]}"
     unset IFS
+
+    # In here because this way
+    # there's no extraneous array laying around
+    local tmpPAGER=(
+        "less"
+        "--+no-init"
+        "--incsearch"
+        "--LONG-PROMPT"
+        "--ignore-case"
+        "--use-color"
+        "--RAW-CONTROL-CHARS"
+    )
+    export PAGER="${tmpPAGER[*]}"
 }
 PS2="| "
 
@@ -89,14 +102,6 @@ bind -m vi-insert -x '"\el":"clear; ls"'
 
 export usr_bin="$PREFIX/bin/"
 export EDITOR="vim"
-export PAGER="less \
-    --+no-init \
-    --incsearch \
-    --LONG-PROMPT \
-    --ignore-case \
-    --use-color \
-    --RAW-CONTROL-CHARS \
-"
 export HISTIGNORE="giy*:git shoe*:git f:cld:c"
 export HISTFILESIZE=2500
 export HISTSIZE=2500
