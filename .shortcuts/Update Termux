@@ -22,6 +22,13 @@ trap closeProcess SIGINT
 
 termux-wake-lock
 clear
+printf "$BOLD$Red%s$NORMAL:\n\n" "vim/plug"
+{
+    vim +PlugUpdate +PlugUpgrade +qa &>/dev/null
+    printf "$Gray%s$NORMAL\n\n" "Updated Vim plugins"
+} &
+getPIDAndWait
+
 printf "$BOLD$Red%s$NORMAL:\n\n" "npm"
 function upgradeProject {
     printf '%b' "$Gray"
