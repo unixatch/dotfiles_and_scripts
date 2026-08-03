@@ -2,13 +2,17 @@
 
 
 sigwinchHandler() (:)
-exitTrapHandler() { printf '\e[?1049l'; return "$BASH_TRAPSIG"; }
+cleanUp() {
+    printf '\e[?1049l'
+    trap - "${signals[@]}"
+    return "${BASH_TRAPSIG:-0}"
+}
 trapHandler() {
     printf '\e[?1049l'
     # Needed because read -s can break
     # the echoing of input characters
     # (see "stty echo")
-    trap $BASH_TRAPSIG
+    trap - $BASH_TRAPSIG
     kill -$BASH_TRAPSIG $BASHPID
 }
 
@@ -86,7 +90,7 @@ inputHandler() {
                 needsToStop="true"
             ;;
             # Quit command
-            q|Q|e|E) exit 0 ;;
+            q|Q|e|E) return 1 ;;
             # Ignore everything else
             *) ;;
         esac
@@ -95,11 +99,12 @@ inputHandler() {
     done
 }
 
-file_selector() (
+file_selector() {
     trap trapHandler SIGINT SIGTERM
-    trap exitTrapHandler EXIT
     trap sigwinchHandler SIGWINCH
+    local signals=( SIGINT SIGTERM SIGWINCH )
 
+    # Necessary for COLUMNS and LINES to be set
     (:)
     local curPos=0 keepLooping="true" selection=()
     shopt -s nullglob
@@ -109,6 +114,7 @@ file_selector() (
     local filenameLengths=() totalLines=0 file i
     for file in "${files[@]}" ;do
         totalLines=0
+        # Counts the lines that a string might take
         for (( i = 0; i < ${#file}; )) ;{
             (( totalLines++ ))
             i=$((i + LINES))
@@ -121,7 +127,12 @@ file_selector() (
     # Opens alternate buffer + saves cursor
     printf '\e[?1049h'
         while "$keepLooping" ;do
-            renderer; inputHandler
+            renderer
+            # In case it's trying to quit
+            ! inputHandler && {
+                cleanUp
+                return 0
+            }
         done
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
@@ -147,7 +158,7 @@ file_selector() (
         # Uses the selected files
         REPLY=( "${listOfSelectedFiles[@]}" )
     fi
-)
+}
 if ! ( return &>/dev/null ) ;then
     # Interactive, run it
     file_selector
