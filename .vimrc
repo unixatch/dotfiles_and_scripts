@@ -7,6 +7,9 @@ let &t_EI .= "\<Esc>[5 q"
 au! VimEnter * source ~/.vim-colors | set termguicolors
 au! BufRead */.vim-colors set syntax=vim
 
+" Faster response after being idle
+set updatetime=500
+
 " Sets the showing of spaces
 "set list
 set lcs+=space:·,eol:⤶
