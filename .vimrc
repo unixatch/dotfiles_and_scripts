@@ -488,6 +488,7 @@ augroup END
 
 " GitGutter
 let g:gitgutter_highlight_linenrs = 1
+let g:gitgutter_close_preview_on_escape = 1
 
 " Airline settings
 let g:airline_extensions = []
