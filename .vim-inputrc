@@ -147,10 +147,6 @@ imap <silent> <C-down> <c-o>mz<c-o>:copy+-1<cr><c-o>`z
 vmap <silent> <C-i> :copy'<-1<cr>`>my`<mzgv`yo`z
 vmap <silent> <C-l> :copy'>+-1<cr>`<my`>mzgv`yo`z
 
-" ALE shortcuts
-noremap <leader><space> :ALEGoToImplementation<cr>
-noremap <leader><leader> :ALEFindReferences<cr>
-
 function! GetAndInsertRegister()
     let l:userInput = input("-> ")
     let l:commandForInserting = "normal! \"".l:userInput."P"
@@ -165,7 +161,7 @@ nnoremap <C-p> :reg <bar> call GetAndInsertRegister()<CR>
 " Very magic
 nnoremap / /\v\c
 cnoremap %s %s/\v\c//gc<left><left><left><left>
-cnoremap ,s ,s/\v\c//gc<home>
+cnoremap ,s s/\v\c//gc<left><left><left><left>
 " Custom squash message based on git merge --squash
 cnoremap .s %s/\v\ccommit ([a-z0-9]*)\nAuthor:.*\nDate:.*\n/• \1:/gc
 
@@ -221,7 +217,20 @@ noremap E :tabnew <bar> Explore<cr>
 " Quit with Ctrl+d
 noremap <c-d> :quit<cr>
 
+" Move tabs using alt + arrow keys
+noremap <M-Left>  :tabprevious<cr>
+noremap <M-Right> :tabnext<cr>
+tnoremap <M-Left>  <c-x>:tabprevious<cr>
+tnoremap <M-Right> <c-x>:tabnext<cr>
+
 " ————————— PLUGINS —————————
+func ShowPreviewHunk()
+    GitGutterPreviewHunk
+    wincmd j
+endfunc
+noremap ghp :call ShowPreviewHunk()<cr>
+noremap ghs :GitGutterStageHunk<cr>
+noremap ghu :GitGutterUndoHunk<cr>
 noremap gi :GitGutterLineHighlightsToggle<CR>
 func ShowHunkList()
     GitGutterQuickFixCurrentFile
@@ -231,4 +240,8 @@ noremap gq :call ShowHunkList()<CR>
 imap <tab> <Plug>snipMateNextOrTrigger
 smap <tab> <Plug>snipMateNextOrTrigger
 nnoremap !u :UndotreeToggle<cr>
+
+" ALE shortcuts
+noremap <leader><space> :ALEGoToImplementation<cr>
+noremap <leader><leader> :ALEFindReferences -relative<cr>
 
