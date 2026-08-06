@@ -47,15 +47,15 @@ while readOrTimeout ;do
     [[ -z "$URL" ]] && break
 done
 
-yt-dlp "${listOfUrls[@]}"
-printf "\n\x1b[33;1;4m%s\x1b[0m" 'Download finished'
-termux-media-scan ~/storage/downloads/ &>/dev/null &
 {
     printf '%s\n' "#$EPOCHSECONDS" "yt-dlp ${listOfUrls[*]}"
 } >> ~/.bash_history &
 # -s → Disables any kind of echoing from stdin
-read -rsn 1
+yt-dlp "${listOfUrls[@]}"
+printf "\n\x1b[33;1;4m%s\x1b[0m" 'Download finished'
+termux-media-scan ~/storage/downloads/ &>/dev/null &
 wait
+read -rsn 1
 [[ -n $PROMPT_DIRTRIM ]] && {
     printf '%b' \
         "$closeAlternateBuffer" \
