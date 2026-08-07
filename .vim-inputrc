@@ -169,7 +169,7 @@ cnoremap .s %s/\v\ccommit ([a-z0-9]*)\nAuthor:.*\nDate:.*\n/• \1:/gc
 " nnoremap gr :ALERename<cr>
 
 " For global replace
-nnoremap gr #:%s/\c<C-R>///gc<left><left><left>
+nnoremap gr #:%s/\c<C-R>///gc<left><left><left><C-r>=getreg("/")[2:-3]<cr>
 
 " For replacing within a range
 nnoremap gR #:,s/\c<C-R>///gc<home>
