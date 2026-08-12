@@ -18,6 +18,7 @@ set promptfmt "\033[1;34m%w\033[0m/%f"
 map j up
 map k down
 
+map gp %cd "$f"; git pull
 map Im $mpv --vo=tct "$f"
 map L $ln -s "$f" "${f##*/}.lnk"
 map Ip ${{
