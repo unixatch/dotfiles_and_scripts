@@ -3,12 +3,13 @@ alias ls="
         --human-readable \
         --group-directories-first \
         --classify --time-style=long-iso \
+        --sort=size \
 "
 alias clear='printf "\e[H\e[2J\e[3J"'
 alias cls='
     printf "%b%s\n\n%s\n" \
         "\e[H\e[2J\e[3J" \
-        "$( ls --color=always -C )" \
+        "$( ls --color=always -C -S )" \
         "$(
             [[ -d .git/ ]] && {
                 git -c "color.status=always" s 
