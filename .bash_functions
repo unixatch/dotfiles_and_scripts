@@ -596,4 +596,18 @@ storageUsed() {
         "${available:0:$availPrecStart}.${available:$availPrecStart} Gb" \
         "${storage[4]}" "  ${storage[5]}"
 }
+listVideoFilesBySize() {
+    local direction
+    case "$1" in
+        -) direction="-" ;;
+        +) direction="+" ;;
+    esac
+    local GLOBSORT="${direction:=-}size"
+
+    # Gets the filenames inside the current folder
+    shopt -s nullglob
+    local videoFiles=(*.webm *.mp4 *.mkv)
+    shopt -u nullglob
+    printf '%s\n' "${videoFiles[@]}"
+}
 
