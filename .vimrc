@@ -3,6 +3,9 @@ let &t_SI .= "\<Esc>[5 q"
 let &t_SR .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[5 q"
 
+" Basically the default without l
+set shortmess=finxtToOS
+
 " Fixes termguicolors
 au! VimEnter * source ~/.vim-colors | set termguicolors
 au! BufRead */.vim-colors set syntax=vim
