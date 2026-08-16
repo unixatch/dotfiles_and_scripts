@@ -58,7 +58,7 @@ printf "\n$BOLD${Red}%s$NORMAL:\n\n" 'pip'
     pipFrozenList=("${pipFrozenList[@]//==/>=}")
     # Remove symlinks
     pipFrozenList=("${pipFrozenList[@]//*@*/}")
-    pip install \
+    pip install -U \
         --requirement /dev/stdin <<< "${pipFrozenList[@]}" \
     | grep --invert-match "already satisfied" || {
         printf "$Gray%s$NORMAL\n" 'Nothing to update'
