@@ -17,7 +17,7 @@ trapHandler() {
 }
 
 renderer() {
-    local file loopPos=0 curTotLines=0 lines=()
+    local line file loopPos=0 curTotLines=0 lines=()
     for file in "${files[@]}" ;do
         (( curTotLines+=filenameLengths[loopPos] ))
         (( curTotLines - curPos > LINES )) && break
@@ -25,8 +25,12 @@ renderer() {
         # Selection highlighter
         [[ -n ${selection[loopPos]} ]] &&
         (( selection[loopPos] == loopPos )) && {
-            lines+=( $'\e[41m'"$file"$'\e[0m\n' )
+            # Makes easier to know where
+            # the cursor is on selected files
+            (( curPos == loopPos )) && line=$'\e[3;1m'
+            lines+=( "$line"$'\e[90;7;40m'"$file"$'\e[0m\n' )
             ((loopPos++))
+            unset line
             continue
         }
         # Cursor highlighter
