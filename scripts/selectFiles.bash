@@ -131,18 +131,17 @@ file_selector() {
             # In case it's trying to quit
             ! inputHandler && {
                 cleanUp
-                return 0
+                return 1
             }
         done
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
 
     # Show selected files
-    local listOfSelectedFiles=() file n
+    local listOfSelectedFiles=() n
     for n in "${selection[@]}" ;{
         echo "${files[n]}"
-        printf -v file '%q' "${files[n]}"
-        listOfSelectedFiles+=("$file")
+        listOfSelectedFiles+=("${files[n]}")
     }
 
     # Confirmation prompt

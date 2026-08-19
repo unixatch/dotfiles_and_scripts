@@ -415,9 +415,15 @@ trash() {
     local normal="$esc""0m"
 
     local files=("$@")
-    [[ -z "${files[*]}" || "${files[*]}" =~ --help|-h ]] && {
+    [[ "${files[*]}" =~ --help|-h ]] && {
         echo "trash <files>"
         return 1
+    }
+    [[ -z "${files[*]}" ]] && {
+        . ./scripts/selectFiles.bash
+        file_selector || return $?
+        files=("${REPLY[@]}")
+        unset REPLY
     }
     for file in "${files[@]}" ;{
         [[ ! -e "$file" ]] && {
