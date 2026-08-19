@@ -2,9 +2,17 @@
     detachedHead = true
 [init]
     defaultBranch = main
+[status]
+    showStash = true
+[help]
+    autoCorrect = prompt
+[rebase]
+    missingCommitsCheck = warn
 [user]
     name = unixatch
 [core]
+    autocrlf = input
+    compression = 9
     whitespace = "fix"
     pager = "delta"
     editor = "vim"
@@ -22,10 +30,12 @@
     extendedRegexp = true
 [log]
     date = "format:%d/%m/%Y %H:%M:%S %z"
+    abbrevCommit = true
 [diff]
     colorMoved = true
     context = 10
     colorMovedWS = "ignore-all-space"
+    wsErrorHighlight = all
 [color "diff"]
     oldMoved = magenta
     oldMovedAlternative = magenta dim
