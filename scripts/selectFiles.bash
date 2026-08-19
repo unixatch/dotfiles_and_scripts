@@ -138,8 +138,7 @@ file_selector() {
                 return 1
             }
         done
-    # Closes alternate buffer + restores cursor
-    printf '\e[?1049l'
+    printf '\e[H\e[0J'
 
     # Show selected files
     local listOfSelectedFiles=() n
@@ -147,6 +146,7 @@ file_selector() {
         echo "${files[n]}"
         listOfSelectedFiles+=("${files[n]}")
     }
+    echo
 
     # Confirmation prompt
     local doIt="false" answer
@@ -161,6 +161,8 @@ file_selector() {
         # Uses the selected files
         REPLY=( "${listOfSelectedFiles[@]}" )
     fi
+    # Closes alternate buffer + restores cursor
+    printf '\e[?1049l'
 }
 if ! ( return &>/dev/null ) ;then
     # Interactive, run it
