@@ -41,6 +41,9 @@ inoremap nm <C-n>
 " Enable quick language completion
 inoremap nj <C-x><C-o>
 
+" Implements Ctrl-k (readline's kill-line) on the command line
+cnoremap <C-k> <C-\>e getcmdline()->strcharpart(0, getcmdpos()-1)<CR>
+
 " Quick dictionary completion
 let nkUsed = 0
 func UseNK()
