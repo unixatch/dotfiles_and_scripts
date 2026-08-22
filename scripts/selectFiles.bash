@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
-
 sigwinchHandler() (:)
+usage() {
+    printf '%s\n' \
+        'file_selector [options]' \
+        '   Like the name implies, it shows a list of filenames available and' \
+        $'   lets you select them, then returns the selected files\n' \
+        'Options:' \
+        '   --sort|-s:' \
+        '       change glob sorting of files' \
+        '   --still|-S:' \
+        "       don't move the cursor after pressing space" \
+        ""
+    return 1
+}
 cleanUp() {
     printf '\e[?1049l'
     trap - "${signals[@]}"
@@ -106,12 +118,14 @@ inputHandler() {
 }
 
 file_selector() {
+    [[ -z "$*" ]] && { usage; return $?; }
     local i GLOBSORT moveTheCursor="true"
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
         case "$arg" in
             -s|--sort)  GLOBSORT="$nextArg" ;;
             -S|--still) moveTheCursor="false" ;;
+            -h|--help)  usage; return $? ;;
         esac
     }
     i= # resets it
