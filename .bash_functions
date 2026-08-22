@@ -421,7 +421,7 @@ trash() {
     }
     [[ -z "${files[*]}" ]] && {
         . ./scripts/selectFiles.bash
-        file_selector --sort '-size' || return $?
+        file_selector --sort '-size' . || return $?
         files=("${REPLY[@]}")
         unset REPLY
     }
