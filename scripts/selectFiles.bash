@@ -106,6 +106,16 @@ inputHandler() {
 }
 
 file_selector() {
+    local i GLOBSORT
+    for (( i = 1; i <= $#; ++i )) ;{
+        local arg="${*:i:1}" nextArg="${*:i+1:1}"
+        case "$arg" in
+            -s|--sort)
+                GLOBSORT="$nextArg"
+            ;;
+        esac
+    }
+    i= # resets it
     trap trapHandler SIGINT SIGTERM
     trap sigwinchHandler SIGWINCH
     local signals=( SIGINT SIGTERM SIGWINCH )
@@ -117,7 +127,7 @@ file_selector() {
     local files=(*.webm *.mkv *.mp4)
     shopt -u nullglob
 
-    local filenameLengths=() totalLines file i nameLength
+    local filenameLengths=() totalLines file nameLength
     for file in "${files[@]}" ;{
         totalLines=0 nameLength=${#file}
         # Counts the lines that a string might take
@@ -168,7 +178,7 @@ file_selector() {
 }
 if ! ( return &>/dev/null ) ;then
     # Interactive, run it
-    file_selector
+    file_selector "$@"
 else
     # Sourced, do nothing
     :
