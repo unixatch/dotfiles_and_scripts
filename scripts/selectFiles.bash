@@ -115,19 +115,19 @@ file_selector() {
     local files=(*.webm *.mkv *.mp4)
     shopt -u nullglob
 
-    local filenameLengths=() totalLines=0 file i
-    for file in "${files[@]}" ;do
-        totalLines=0
+    local filenameLengths=() totalLines file i nameLength
+    for file in "${files[@]}" ;{
+        totalLines=0 nameLength=${#file}
         # Counts the lines that a string might take
-        for (( i = 0; i < ${#file}; )) ;{
-            (( totalLines++ ))
-            i=$((i + LINES))
+        for (( i = 0; i < nameLength; )) ;{
+            ((
+                ++totalLines,
+                (i += COLUMNS) >= nameLength
+            )) \
+                && break
         }
-        filenameLengths+=(
-            $(( totalLines != 1 ? totalLines - 1 : 1 ))
-        )
-        totalLines=0
-    done
+        filenameLengths+=("$totalLines")
+    }
     # Opens alternate buffer + saves cursor
     printf '\e[?1049h'
         while "$keepLooping" ;do
