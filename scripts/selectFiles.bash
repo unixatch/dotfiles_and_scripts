@@ -18,9 +18,9 @@ trapHandler() {
 
 renderer() {
     local line file loopPos=0 curTotLines=0 lines=()
-    for file in "${files[@]}" ;do
+    for file in "${files[@]}" ;{
         (( curTotLines+=filenameLengths[loopPos] ))
-        (( curTotLines - curPos > LINES )) && break
+        (( curTotLines - curPos >= LINES )) && break
 
         # Selection highlighter
         [[ -n ${selection[loopPos]} ]] &&
@@ -42,7 +42,7 @@ renderer() {
         # Normal printing
         lines+=("$file\n")
         ((loopPos++))
-    done
+    }
     IFS= lines="${lines[*]}"
     printf '\e[H\e[0J%b' "$lines"
 }
