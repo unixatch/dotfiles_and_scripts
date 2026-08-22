@@ -80,8 +80,10 @@ inputHandler() {
             " ")
                 if [[ -n ${selection[$curPos]} ]] ;then
                     unset "selection[curPos]"
+                    ((curPos++))
                 else
                     selection[curPos]="$curPos"
+                    ((curPos++))
                 fi
                 needsToStop="true"
             ;;
