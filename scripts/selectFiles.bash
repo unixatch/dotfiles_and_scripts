@@ -80,10 +80,10 @@ inputHandler() {
             " ")
                 if [[ -n ${selection[$curPos]} ]] ;then
                     unset "selection[curPos]"
-                    ((curPos++))
+                    $moveTheCursor && ((curPos++))
                 else
                     selection[curPos]="$curPos"
-                    ((curPos++))
+                    $moveTheCursor && ((curPos++))
                 fi
                 needsToStop="true"
             ;;
@@ -106,13 +106,12 @@ inputHandler() {
 }
 
 file_selector() {
-    local i GLOBSORT
+    local i GLOBSORT moveTheCursor="true"
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
         case "$arg" in
-            -s|--sort)
-                GLOBSORT="$nextArg"
-            ;;
+            -s|--sort)  GLOBSORT="$nextArg" ;;
+            -S|--still) moveTheCursor="false" ;;
         esac
     }
     i= # resets it
