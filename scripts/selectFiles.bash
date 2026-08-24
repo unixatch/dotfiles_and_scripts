@@ -20,6 +20,7 @@ _fs_cleanUpFuncs() {
              _fs_renderer _fs_inputHandler
 }
 _fs_cleanUp() {
+    # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
     trap - "${signals[@]}"
     _fs_cleanUpFuncs
@@ -205,14 +206,10 @@ file_selector() {
             *)       printf '\e[F' ;;
         esac
     done
+
+    _fs_cleanUp
     # Uses the selected files
     "$doIt" && REPLY=( "${listOfSelectedFiles[@]}" )
-
-    # Closes alternate buffer + restores cursor
-    printf '\e[?1049l'
-
-    _fs_cleanUpFuncs
-    "$doIt" # true/false command runs
 }
 
 # Equivalent to python's if __name__ == "__main__" check
