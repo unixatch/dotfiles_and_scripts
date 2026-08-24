@@ -83,6 +83,19 @@ _fs_inputHandler() {
                     continue
                 }
 
+                # Inverted controls
+                if "$invertJK" ;then
+                    case "$input" in
+                        j) input="k" ;;
+                        k) input="j" ;;
+                    esac
+                fi
+                if "$invertControls" ;then
+                    case "$input" in
+                        A|w|j) input="B" ;;
+                        B|s|k) input="A" ;;
+                    esac
+                fi
                 [[ $input =~ $upRegex ]] && ((
                     curPos > 0
                         ? curPos--
@@ -126,10 +139,13 @@ _fs_inputHandler() {
 
 file_selector() {
     [[ -z "$*" ]] && { _fs_usage; return $?; }
-    local i GLOBSORT moveTheCursor="true"
+    local i GLOBSORT moveTheCursor="true" \
+          invertControls="false" invertJK="false"
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
         case "$arg" in
+            -invA|--invert-all) invertControls="true" ;;
+            -inv|--invert-jk)   invertJK="true" ;;
             -s|--sort)  GLOBSORT="$nextArg" ;;
             -S|--still) moveTheCursor="false" ;;
             -h|--help)  _fs_usage; return $? ;;
