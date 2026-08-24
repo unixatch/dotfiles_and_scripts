@@ -19,6 +19,7 @@ map j up
 map k down
 
 map gp %cd "$f"; git pull
+map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
 map Im $mpv --vo=tct "$f"
 map L $ln -s "$f" "${f##*/}.lnk"
