@@ -182,12 +182,13 @@ file_selector() {
             *)       printf '\e[F' ;;
         esac
     done
-    if "$doIt" ;then
-        # Uses the selected files
-        REPLY=( "${listOfSelectedFiles[@]}" )
-    fi
+    # Uses the selected files
+    "$doIt" && REPLY=( "${listOfSelectedFiles[@]}" )
+
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
+
+    "$doIt" # true/false command runs
 }
 
 # Equivalent to python's if __name__ == "__main__" check
