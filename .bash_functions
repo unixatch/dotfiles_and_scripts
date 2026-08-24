@@ -420,8 +420,9 @@ trash() {
         return 1
     }
     [[ -z "${files[*]}" ]] && {
-        . ./scripts/selectFiles.bash
-        file_selector --sort '-size' . || return $?
+        . ./scripts/selectFiles.bash   || { _fs_cleanUpFuncs &>/dev/null; }
+        file_selector --invert-jk --sort '-size' . || local fSelectorExitCode=$?
+        (( fSelectorExitCode )) && return "$fSelectorExitCode"
         files=("${REPLY[@]}")
         unset REPLY
     }
