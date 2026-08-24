@@ -189,11 +189,13 @@ file_selector() {
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
 }
+
+# Equivalent to python's if __name__ == "__main__" check
 if ! ( return &>/dev/null ) ;then
     # Interactive, run it
     file_selector "$@"
 else
-    # Sourced, do nothing
+    # Sourced, do nothing and exit with 0
     :
 fi
 
