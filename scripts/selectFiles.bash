@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-sigwinchHandler() (:)
-usage() {
+_fs_sigwinchHandler() (:)
+_fs_usage() {
     printf '%s\n' \
         'file_selector [options]' \
         '   Like the name implies, it shows a list of filenames available and' \
@@ -14,21 +14,28 @@ usage() {
         ""
     return 1
 }
-cleanUp() {
+_fs_cleanUpFuncs() {
+    unset -f _fs_usage _fs_cleanUpFuncs \
+             _fs_sigwinchHandler _fs_cleanUp _fs_trapHandler \
+             _fs_renderer _fs_inputHandler
+}
+_fs_cleanUp() {
     printf '\e[?1049l'
     trap - "${signals[@]}"
+    _fs_cleanUpFuncs
     return "${BASH_TRAPSIG:-0}"
 }
-trapHandler() {
+_fs_trapHandler() {
     printf '\e[?1049l'
     # Needed because read -s can break
     # the echoing of input characters
     # (see "stty echo")
     trap - $BASH_TRAPSIG
+    _fs_cleanUpFuncs
     kill -$BASH_TRAPSIG $BASHPID
 }
 
-renderer() {
+_fs_renderer() {
     local line file loopPos=0 curTotLines=0 lines=()
     for file in "${files[@]}" ;{
         (( curTotLines+=filenameLengths[loopPos] ))
@@ -58,7 +65,7 @@ renderer() {
     IFS= lines="${lines[*]}"
     printf '\e[H\e[0J%b' "$lines"
 }
-inputHandler() {
+_fs_inputHandler() {
     local input needsToStop="false"
     local upRegex="A|w|k" downRegex="B|s|j" arrowRegex="^\["
     local wholeInput=""
@@ -118,19 +125,19 @@ inputHandler() {
 }
 
 file_selector() {
-    [[ -z "$*" ]] && { usage; return $?; }
+    [[ -z "$*" ]] && { _fs_usage; return $?; }
     local i GLOBSORT moveTheCursor="true"
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
         case "$arg" in
             -s|--sort)  GLOBSORT="$nextArg" ;;
             -S|--still) moveTheCursor="false" ;;
-            -h|--help)  usage; return $? ;;
+            -h|--help)  _fs_usage; return $? ;;
         esac
     }
     i= # resets it
-    trap trapHandler SIGINT SIGTERM
-    trap sigwinchHandler SIGWINCH
+    trap _fs_trapHandler SIGINT SIGTERM
+    trap _fs_sigwinchHandler SIGWINCH
     local signals=( SIGINT SIGTERM SIGWINCH )
 
     # Necessary for COLUMNS and LINES to be set
@@ -156,10 +163,10 @@ file_selector() {
     # Opens alternate buffer + saves cursor
     printf '\e[?1049h'
         while "$keepLooping" ;do
-            renderer
+            _fs_renderer
             # In case it's trying to quit
-            ! inputHandler && {
-                cleanUp
+            ! _fs_inputHandler && {
+                _fs_cleanUp
                 return 1
             }
         done
@@ -188,6 +195,7 @@ file_selector() {
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
 
+    _fs_cleanUpFuncs
     "$doIt" # true/false command runs
 }
 
