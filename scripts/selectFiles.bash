@@ -153,16 +153,22 @@ file_selector() {
         esac
     }
     i= # resets it
-    trap _fs_trapHandler SIGINT SIGTERM
-    trap _fs_sigwinchHandler SIGWINCH
-    local signals=( SIGINT SIGTERM SIGWINCH )
-
     # Necessary for COLUMNS and LINES to be set
     (:)
     local curPos=0 keepLooping="true" selection=()
     shopt -s nullglob
     local files=(*.webm *.mkv *.mp4)
     shopt -u nullglob
+
+    [[ -z "${files[*]}" ]] && {
+        printf '\e[90m%s\e[0m\n' \
+               "The folder doesn't contain valid files, quitting..."
+        return 1
+    }
+
+    trap _fs_trapHandler SIGINT SIGTERM
+    trap _fs_sigwinchHandler SIGWINCH
+    local signals=( SIGINT SIGTERM SIGWINCH )
 
     local filenameLengths=() totalLines file nameLength
     for file in "${files[@]}" ;{
