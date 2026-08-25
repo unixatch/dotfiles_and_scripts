@@ -3,7 +3,7 @@
 _fs_sigwinchHandler() (:)
 _fs_usage() {
     printf '%s\n' \
-        'file_selector [options]' \
+        'videofile_selector [options]' \
         '   Like the name implies, it shows a list of filenames available and' \
         $'   lets you select them, then returns the selected files\n' \
         'Options:' \
@@ -138,7 +138,7 @@ _fs_inputHandler() {
     done
 }
 
-file_selector() {
+videofile_selector() {
     [[ -z "$*" ]] && { _fs_usage; return $?; }
     local i GLOBSORT moveTheCursor="true" \
           invertControls="false" invertJK="false"
@@ -221,7 +221,7 @@ file_selector() {
 # Equivalent to python's if __name__ == "__main__" check
 if ! ( return &>/dev/null ) ;then
     # Interactive, run it
-    file_selector "$@"
+    videofile_selector "$@"
 else
     # Sourced, do nothing and exit with 0
     :
