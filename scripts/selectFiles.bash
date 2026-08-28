@@ -23,7 +23,7 @@ _fs_cleanUp() {
     # Closes alternate buffer + restores cursor
     printf '\e[?1049l'
     trap - "${signals[@]}"
-    _fs_cleanUpFuncs
+    [[ $1 != "funcsExcluded" ]] && _fs_cleanUpFuncs
     return "${BASH_TRAPSIG:-0}"
 }
 _fs_trapHandler() {
@@ -204,15 +204,22 @@ videofile_selector() {
     echo
 
     # Confirmation prompt
-    local doIt="false" answer
-    while read -p "Use file [y|n]? " -r answer ;do
+    local doIt="false" back="false" answer
+    while read -p "Use file [y|n|b]? " -r answer ;do
         case "$answer" in
             y|Y|s|S) doIt="true"; break ;;
             n|N)     break ;;
-            *)       printf '\e[F' ;;
+            b|B) 
+                back="true"
+                _fs_cleanUp "funcsExcluded"
+                videofile_selector "$@"
+                break
+            ;;
+            *)  printf '\e[F' ;;
         esac
     done
 
+    $back && return
     _fs_cleanUp
     # Uses the selected files
     "$doIt" && REPLY=( "${listOfSelectedFiles[@]}" )
