@@ -39,14 +39,14 @@ _fs_trapHandler() {
 _fs_isLastRender() {
     local totLines=$((curTotLines + filenameLengths[loopPos+1]))
 
-    (( totLines - curPos < LINES ))
+    return $(( totLines - curPos < LINES ))
 }
 _fs_renderer() {
     local line file loopPos=0 curTotLines=0 lines=()
     for file in "${files[@]}" ;{
         (( curTotLines+=filenameLengths[loopPos] ))
         (( curTotLines - curPos >= LINES )) && break
-        _fs_isLastRender && line[1]=$'\n'
+        ! _fs_isLastRender && line[1]=$'\n'
 
         # Selection highlighter
         [[ -n ${selection[loopPos]} ]] &&
