@@ -642,4 +642,25 @@ showVideoDescription() {
     printf '%s\n' "$ytDlpOutput"
     printf -- '-%.0s' {0..74}; echo
 }
+listArchiveContents() {
+    ! command -v 7z &>/dev/null && {
+        printf '\e[31m%s\e[0m\n' "7z program is required"
+        return 127
+    }
+    local usage='listArchiveContents <file>'
+    [[ -z "$*" ]] && { echo "$usage"; return 1; }
+
+    local arg
+    for arg ;do
+        case "$arg" in
+            -h|--help) echo "$usage"; return ;;
+            *) [[ -e $arg ]] && local file="$arg" ;;
+        esac
+    done
+    [[ -z $file ]] && {
+        echo $'\e[90mNo file provided...\e[0m'
+        return 2
+    }
+    7z l "$file" | less
+}
 
