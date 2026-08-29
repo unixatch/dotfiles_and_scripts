@@ -21,7 +21,7 @@ map k down
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
-map Im $mpv --vo=tct "$f"
+map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
 map Ip ${{
     # Obtain file names as an array
