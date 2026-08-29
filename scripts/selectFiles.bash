@@ -17,7 +17,7 @@ _fs_usage() {
 _fs_cleanUpFuncs() {
     unset -f _fs_usage _fs_cleanUpFuncs \
              _fs_sigwinchHandler _fs_cleanUp _fs_trapHandler \
-             _fs_renderer _fs_inputHandler
+             _fs_isLastRender _fs_renderer _fs_inputHandler
 }
 _fs_cleanUp() {
     # Closes alternate buffer + restores cursor
@@ -36,32 +36,40 @@ _fs_trapHandler() {
     kill -$BASH_TRAPSIG $BASHPID
 }
 
+_fs_isLastRender() {
+    local totLines=$((curTotLines + filenameLengths[loopPos+1]))
+
+    (( totLines - curPos < LINES ))
+}
 _fs_renderer() {
     local line file loopPos=0 curTotLines=0 lines=()
     for file in "${files[@]}" ;{
         (( curTotLines+=filenameLengths[loopPos] ))
         (( curTotLines - curPos >= LINES )) && break
+        _fs_isLastRender && line[1]=$'\n'
 
         # Selection highlighter
         [[ -n ${selection[loopPos]} ]] &&
         (( selection[loopPos] == loopPos )) && {
             # Makes easier to know where
             # the cursor is on selected files
-            (( curPos == loopPos )) && line=$'\e[3;1m'
-            lines+=( "$line"$'\e[90;7;40m'"$file"$'\e[0m\n' )
+            (( curPos == loopPos )) && line[0]=$'\e[3;1m'
+            lines+=( "${line[0]}"$'\e[90;7;40m'"$file"$'\e[0m'"${line[1]}" )
             ((loopPos++))
             unset line
             continue
         }
         # Cursor highlighter
         (( curPos == loopPos )) && {
-            lines+=( $'\e[7m'"$file"$'\e[0m\n' )
+            lines+=( $'\e[7m'"$file"$'\e[0m'"${line[1]}" )
             ((loopPos++))
+            unset line
             continue
         }
         # Normal printing
-        lines+=("$file\n")
+        lines+=("$file${line[1]}")
         ((loopPos++))
+        unset line
     }
     IFS= lines="${lines[*]}"
     printf '\e[H\e[0J%b' "$lines"
