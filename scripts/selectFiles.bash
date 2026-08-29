@@ -39,13 +39,15 @@ _fs_trapHandler() {
 _fs_isLastRender() {
     local totLines=$((curTotLines + filenameLengths[loopPos+1]))
 
-    return $(( totLines - curPos < LINES ))
+    return $(( totLines - curPos < LINES - longestFilenameLength ))
 }
 _fs_renderer() {
     local line file loopPos=0 curTotLines=0 lines=()
     for file in "${files[@]}" ;{
         (( curTotLines+=filenameLengths[loopPos] ))
-        (( curTotLines - curPos >= LINES )) && break
+        (( curTotLines - curPos >= LINES - longestFilenameLength )) && {
+            break
+        }
         ! _fs_isLastRender && line[1]=$'\n'
 
         # Selection highlighter
@@ -178,7 +180,7 @@ videofile_selector() {
     trap _fs_sigwinchHandler SIGWINCH
     local signals=( SIGINT SIGTERM SIGWINCH )
 
-    local filenameLengths=() totalLines file nameLength
+    local filenameLengths=() longestFilenameLength=0 totalLines file nameLength
     for file in "${files[@]}" ;{
         totalLines=0 nameLength=${#file}
         # Counts the lines that a string might take
@@ -190,6 +192,10 @@ videofile_selector() {
                 && break
         }
         filenameLengths+=("$totalLines")
+        ((
+            totalLines > longestFilenameLength
+            && ( longestFilenameLength=totalLines )
+        ))
     }
     # Opens alternate buffer + saves cursor
     printf '\e[?1049h'
@@ -217,7 +223,7 @@ videofile_selector() {
         case "$answer" in
             y|Y|s|S) doIt="true"; break ;;
             n|N)     break ;;
-            b|B) 
+            b|B)
                 back="true"
                 _fs_cleanUp "funcsExcluded"
                 videofile_selector "$@"
