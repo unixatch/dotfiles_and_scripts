@@ -86,7 +86,7 @@ _fs_inputHandler() {
     while read -rsN 1 input ;do
         case "$input" in
             # Up and down arrows
-            A|B|w|s|j|k)
+            A|B|w|W|s|S|j|J|k|K)
                 # Broken up/down arrow escape sequences
                 [[ $input =~ A|B ]] &&
                 [[ ! $wholeInput =~ $arrowRegex ]] && {
