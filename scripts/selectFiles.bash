@@ -17,7 +17,8 @@ _fs_usage() {
 _fs_cleanUpFuncs() {
     unset -f _fs_usage _fs_cleanUpFuncs \
              _fs_sigwinchHandler _fs_cleanUp _fs_trapHandler \
-             _fs_isLastRender _fs_renderer _fs_inputHandler
+             _fs_isLastRender _fs_updateCursor \
+             _fs_renderer _fs_inputHandler
 }
 _fs_cleanUp() {
     # Closes alternate buffer + restores cursor
@@ -76,15 +77,27 @@ _fs_renderer() {
     IFS= lines="${lines[*]}"
     printf '\e[H\e[0J%b' "$lines"
 }
+_fs_updateCursor() {
+    [[ $input =~ $upRegex ]] && ((
+        curPos > 0
+            ? curPos--
+            : ( curPos=$((${#files[@]}-1)) )
+    ))
+    [[ $input =~ $downRegex ]] && ((
+        curPos < ${#files[@]}-1
+            ? curPos++
+            : ( curPos=0 )
+    ))
+}
 _fs_inputHandler() {
     local input needsToStop="false"
     local upRegex="A|w|k" downRegex="B|s|j" arrowRegex="^\["
-    local wholeInput=""
+    local repeat=0 wholeInput=""
 
     # TODO: Emacs bindings?
-    # TODO: vim shortcuts like 3k?
     while read -rsN 1 input ;do
         case "$input" in
+            [0-9]*) repeat="$input" ;;
             # Up and down arrows
             [ABwWsSjJkK])
                 # Broken up/down arrow escape sequences
@@ -107,16 +120,13 @@ _fs_inputHandler() {
                         B|s|k) input="A" ;;
                     esac
                 fi
-                [[ $input =~ $upRegex ]] && ((
-                    curPos > 0
-                        ? curPos--
-                        : ( curPos=$((${#files[@]}-1)) )
-                ))
-                [[ $input =~ $downRegex ]] && ((
-                    curPos < ${#files[@]}-1
-                        ? curPos++
-                        : ( curPos=0 )
-                ))
+                if (( repeat )) ;then
+                    for (( i = 0; i < repeat; ++i )) ;{
+                        _fs_updateCursor
+                    }
+                else
+                    _fs_updateCursor
+                fi
                 needsToStop="true"
             ;;
             # Selector
