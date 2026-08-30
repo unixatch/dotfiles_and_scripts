@@ -391,7 +391,7 @@ endfun
 
 if has("autocmd")
     autocmd! BufWritePre 
-        \*/COMMIT_EDITMSG,*.txt,*.ps1,*.mjs,*.js,*.py,*.wiki,*.sh,*.coffee 
+        \*/COMMIT_EDITMSG,*.txt,*.ps1,*.mjs,*.js,*.py,*.wiki,*.sh,*.bash,*.coffee 
         \call CleanExtraSpaces()
 endif
 
