@@ -97,7 +97,13 @@ _fs_inputHandler() {
     # TODO: Emacs bindings?
     while read -rsN 1 input ;do
         case "$input" in
-            g) curPos=0; needsToStop="true" ;;
+            g)
+                if [[ $wholeInput == "g" ]] ;then
+                    curPos=0; needsToStop="true"
+                else
+                    wholeInput=""
+                fi
+            ;;
             G) curPos=$((${#files[@]}-1)); needsToStop="true" ;;
             [0-9]) repeat+=$input ;;
             # Up and down arrows
