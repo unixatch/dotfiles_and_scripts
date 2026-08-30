@@ -92,14 +92,14 @@ _fs_updateCursor() {
 _fs_inputHandler() {
     local input needsToStop="false"
     local upRegex="A|w|k" downRegex="B|s|j" arrowRegex="^\["
-    local repeat=0 wholeInput=""
+    local repeat wholeInput=""
 
     # TODO: Emacs bindings?
     while read -rsN 1 input ;do
         case "$input" in
             g) curPos=0; needsToStop="true" ;;
             G) curPos=$((${#files[@]}-1)); needsToStop="true" ;;
-            [0-9]*) repeat="$input" ;;
+            [0-9]) repeat+=$input ;;
             # Up and down arrows
             [ABwWsSjJkK])
                 # Broken up/down arrow escape sequences
@@ -126,6 +126,7 @@ _fs_inputHandler() {
                     for (( i = 0; i < repeat; ++i )) ;{
                         _fs_updateCursor
                     }
+                    repeat=0
                 else
                     _fs_updateCursor
                 fi
