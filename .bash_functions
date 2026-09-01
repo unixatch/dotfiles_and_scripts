@@ -421,7 +421,9 @@ trash() {
     }
     [[ -z "${files[*]}" ]] && {
         . ./scripts/selectFiles.bash   || { _fs_cleanUpFuncs &>/dev/null; }
-        videofile_selector --invert-jk --sort '-size' . || local fSelectorExitCode=$?
+        videofile_selector \
+            --incase --invert-jk \
+            --sort '-size' . || local fSelectorExitCode=$?
         (( fSelectorExitCode )) && return "$fSelectorExitCode"
         files=("${REPLY[@]}")
         unset REPLY
