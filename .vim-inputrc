@@ -114,12 +114,6 @@ nnoremap <leader>c :call clearmatches()<CR>
 noremap - za
 noremap <C-_> zA
 
-" Fix pageup and pagedown after swap
-noremap <pageup> <pagedown>
-noremap <pagedown> <pageup>
-inoremap <pageup> <pagedown>
-inoremap <pagedown> <pageup>
-
 " Move lines of text
 " (`z/`y means go to the saved position using the saved letter)
 " ('< = start of selection, '> = end of selection)
