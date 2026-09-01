@@ -2,16 +2,24 @@
 
 _fs_sigwinchHandler() (:)
 _fs_usage() {
-    printf '%s\n' \
-        'videofile_selector [options]' \
-        '   Like the name implies, it shows a list of filenames available and' \
-        $'   lets you select them, then returns the selected files\n' \
-        'Options:' \
-        '   --sort|-s:' \
-        '       change glob sorting of files' \
-        '   --still|-S:' \
-        "       don't move the cursor after pressing space" \
+    local usage=(
+        'videofile_selector [options]'
+        '   Like the name implies, it shows a list of filenames available and'
+        $'   lets you select them, then returns the selected files\n'
+        'Options:'
+        '   -i|--incase:'
+        '       makes the regex search insensitive'
+        '   -invA|--invert-all'
+        '       inverts all movement controls'
+        '   -inv|--invert-jk'
+        '       inverts only jk keys'
+        '   --sort|-s:'
+        '       change glob sorting of files'
+        '   --still|-S:'
+        "       don't move the cursor after pressing space"
         ""
+    )
+    printf '%s\n' "${usage[@]}"
     return 1
 }
 _fs_cleanUpFuncs() {
