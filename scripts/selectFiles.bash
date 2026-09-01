@@ -17,7 +17,7 @@ _fs_usage() {
 _fs_cleanUpFuncs() {
     unset -f _fs_usage _fs_cleanUpFuncs \
              _fs_sigwinchHandler _fs_cleanUp _fs_trapHandler \
-             _fs_isLastRender _fs_updateCursor \
+             _fs_isLastRender _fs_search _fs_updateCursor \
              _fs_renderer _fs_inputHandler
 }
 _fs_cleanUp() {
@@ -89,6 +89,31 @@ _fs_updateCursor() {
             : ( curPos=0 )
     ))
 }
+_fs_search() {
+    case $1 in
+        previous) local previous="1" ;;
+    esac
+    # New search term
+    [[ -z $1 && -z $previous ]] && read -p '/' -r searchTerm
+    [[ -z $searchTerm ]] && return 1
+
+    local i=${foundPos:-0} file found="false"
+    # Backwards & Forwards search
+    for ((
+        i != curPos && (i = curPos),
+        i != 0 && previous ? (i -= 1) : (i += 1) ;
+
+        previous
+            ? i >= 0
+            : i < ${#files[@]} ; previous ? --i : ++i
+    )) ;{
+        [[ ${files[i]} =~ $searchTerm ]] && {
+            foundPos=$i; found="true"
+            break
+        }
+    }
+    $found
+}
 _fs_inputHandler() {
     local input needsToStop="false"
     local upRegex="A|w|k" downRegex="B|s|j" arrowRegex="^\["
@@ -97,6 +122,19 @@ _fs_inputHandler() {
     # TODO: Emacs bindings?
     while read -rsN 1 input ;do
         case "$input" in
+            /|f)
+                _fs_search "" && curPos="$foundPos"
+                needsToStop="true"
+            ;;
+            n|N)
+                if [[ $input == n ]] ;then
+                    _fs_search next
+                else
+                    _fs_search previous
+                fi \
+                    && curPos="$foundPos" # Conditional finally
+                needsToStop="true"
+            ;;
             g)
                 if [[ $wholeInput == "g" ]] ;then
                     curPos=0; needsToStop="true"
@@ -169,7 +207,7 @@ _fs_inputHandler() {
 
 videofile_selector() {
     [[ -z "$*" ]] && { _fs_usage; return $?; }
-    local i GLOBSORT moveTheCursor="true" \
+    local i searchTerm foundPos GLOBSORT moveTheCursor="true" \
           invertControls="false" invertJK="false"
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
