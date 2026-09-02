@@ -124,6 +124,10 @@ _fs_search() {
             foundPos=$i; found="true"
             break
         }
+        (( ! previous && i+1 >= ${#files[@]}-1 )) && {
+            i=0; continue
+        }
+        (( previous && i-1 == 0 )) && i=$(( ${#files[@]}-1 ))
     }
     $incase && [[ -z $preEnabled ]] && shopt -u nocasematch
     $found
