@@ -57,7 +57,12 @@ _fs_renderer() {
         (( curTotLines - curPos >= LINES - longestFilenameLength )) && {
             break
         }
-        ! _fs_isLastRender && line[1]=$'\n'
+        if ! _fs_isLastRender ;then
+            line[1]=$'\n'
+            isOnEmptyLine="true"
+        else
+            isOnEmptyLine="false"
+        fi
 
         # Selection highlighter
         [[ -n ${selection[loopPos]} ]] &&
@@ -102,7 +107,10 @@ _fs_search() {
         previous) local previous="1" ;;
     esac
     # New search term
-    [[ -z $1 && -z $previous ]] && read -p '/' -r searchTerm
+    [[ -z $1 && -z $previous ]] && {
+        ! $isOnEmptyLine && echo
+        read -p '/' -r searchTerm
+    }
     [[ -z $searchTerm ]] && return 1
 
     local preEnabled
@@ -233,7 +241,7 @@ _fs_inputHandler() {
 videofile_selector() {
     [[ -z "$*" ]] && { _fs_usage; return $?; }
 
-    local i searchTerm foundPos GLOBSORT \
+    local i searchTerm isOnEmptyLine foundPos GLOBSORT \
           moveTheCursor="true" incase="false" \
           invertControls="false" invertJK="false"
 
