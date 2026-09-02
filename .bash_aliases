@@ -66,8 +66,7 @@ alias terminfo="less ~/terminfo.txt"
 alias yt-dlp="
     'yt-dlp' \
         --output '%(title)s [%(uploader)s].%(ext)s' \
-        --embed-metadata \
-        --embed-subs --write-automatic-subs --sub-langs en \
+        --embed-metadata --write-automatic-subs --embed-subs \
         --format-sort='width:1920,height:1080,fps:30' \
         --sponsorblock-remove sponsor,selfpromo,interaction \
         --sleep-subtitles 1.1 \
