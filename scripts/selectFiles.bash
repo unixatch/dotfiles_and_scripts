@@ -109,25 +109,32 @@ _fs_search() {
     shopt -q nocasematch && preEnabled="true"
     $incase && [[ -z $preEnabled ]] && shopt -s nocasematch
 
-    local i=${foundPos:-0} file found="false"
+    local i=${foundPos:-0} \
+          total=$(( previous ? 0 : ${#files[@]} ))
+    local file wrapped="0" found="false"
     # Backwards & Forwards search
-    $incase && [[ -z $preEnabled ]] && shopt -s nocasematch
     for ((
         i != curPos && (i = curPos),
         i != 0 && previous ? (i -= 1) : (i += 1) ;
 
         previous
-            ? i >= 0
-            : i < ${#files[@]} ; previous ? --i : ++i
+            ? i >= total
+            : i < total ; previous ? --i : ++i
     )) ;{
         [[ ${files[i]} =~ $searchTerm ]] && {
             foundPos=$i; found="true"
             break
         }
+        (( wrapped > 1 )) && break
         (( ! previous && i+1 >= ${#files[@]}-1 )) && {
-            i=0; continue
+            i=0; total=$curPos
+            (( ++wrapped ))
+            continue
         }
-        (( previous && i-1 == 0 )) && i=$(( ${#files[@]}-1 ))
+        (( previous && i-1 == 0 )) && {
+            i=$(( ${#files[@]}-1 )); total=$curPos
+            (( ++wrapped ))
+        }
     }
     $incase && [[ -z $preEnabled ]] && shopt -u nocasematch
     $found
@@ -225,9 +232,11 @@ _fs_inputHandler() {
 
 videofile_selector() {
     [[ -z "$*" ]] && { _fs_usage; return $?; }
+
     local i searchTerm foundPos GLOBSORT \
           moveTheCursor="true" incase="false" \
           invertControls="false" invertJK="false"
+
     for (( i = 1; i <= $#; ++i )) ;{
         local arg="${*:i:1}" nextArg="${*:i+1:1}"
         case "$arg" in
