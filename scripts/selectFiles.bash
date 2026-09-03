@@ -109,7 +109,24 @@ _fs_search() {
     # New search term
     [[ -z $1 && -z $previous ]] && {
         ! $isOnEmptyLine && echo
-        read -p '/' -r searchTerm
+
+        # This is jank but there's not really a better way.
+        # Basically when Ctrl-c is invoked,
+        # it closes the prompt and
+        # it restores the previous state of the SIGINT trap.
+        local interruptedPrompt
+        trap - SIGINT
+        trap "exec 3<&-" SIGINT
+        exec 3<&0 # duplicate stdin
+
+            printf '/'
+            read -u 3 -r searchTerm 2>/dev/null \
+                || interruptedPrompt="$?"
+
+        exec 3<&- # try closing duplicated stdin
+        trap - SIGINT
+        trap _fs_trapHandler SIGINT
+        (( interruptedPrompt == 1 )) && return 1
     }
     [[ -z $searchTerm ]] && return 1
 
