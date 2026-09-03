@@ -36,6 +36,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 " Search in range
 " vnoremap / /\%><C-r>=line(".")<cr>l\%<<C-r>=line("'>")+1<cr>l
 
+" Toggle wrapping
+noremap !w :set wrap!<cr>
+
 " Enable quick completion
 inoremap nm <C-n>
 " Enable quick language completion
@@ -214,6 +217,9 @@ tnoremap <ScrollWheelDown> <down>
 
 " Explore on E
 noremap <leader>e :tabnew <bar> Explore<cr>
+
+" Creates a empty new tab
+noremap <leader>t :tabnew<cr>
 
 " Quit with Ctrl+d
 noremap <c-d> :quit<cr>
