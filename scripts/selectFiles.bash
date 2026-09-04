@@ -94,10 +94,10 @@ _fs_updateCursor() {
     [[ $input =~ $upRegex ]] && ((
         curPos > 0
             ? curPos--
-            : ( curPos=$((${#files[@]}-1)) )
+            : ( curPos=$((filesCount-1)) )
     ))
     [[ $input =~ $downRegex ]] && ((
-        curPos < ${#files[@]}-1
+        curPos < filesCount-1
             ? curPos++
             : ( curPos=0 )
     ))
@@ -134,30 +134,36 @@ _fs_search() {
     shopt -q nocasematch && preEnabled="true"
     $incase && [[ -z $preEnabled ]] && shopt -s nocasematch
 
-    local i=${foundPos:-0} \
-          total=$(( previous ? 0 : ${#files[@]} ))
+    local i=$((
+        ${foundPos:-0} != curPos
+            ? curPos
+            : ${foundPos:-0}
+    ))
+    local total=$(( previous ? 0 : filesCount ))
     local file wrapped="0" found="false"
     # Backwards & Forwards search
     for ((
-        i != curPos && (i = curPos),
-        i != 0 && previous ? (i -= 1) : (i += 1) ;
+        i != 0 && i < filesCount-1
+            && (previous ? (i -= 1) : (i += 1)) ;
 
-        previous
-            ? i >= total
-            : i < total ; previous ? --i : ++i
+        previous ? i >= total : i < total ;
+        previous ? --i : ++i
     )) ;{
-        [[ ${files[i]} =~ $searchTerm ]] && {
+        [[ ${files[i]} =~ $searchTerm ]] &&
+        (( foundPos != i )) && {
             foundPos=$i; found="true"
             break
         }
         (( wrapped > 1 )) && break
-        (( ! previous && i+1 >= ${#files[@]}-1 )) && {
-            i=0; total=$curPos
+
+        (( ! previous && i+1 >= filesCount-1 )) &&
+        [[ ! ${files[i+1]} =~ $searchTerm ]] && {
+            i=-1; total=$curPos
             (( ++wrapped ))
             continue
         }
-        (( previous && i-1 == 0 )) && {
-            i=$(( ${#files[@]}-1 )); total=$curPos
+        (( previous && (i ? i-1 : i) == 0 )) && {
+            i=$filesCount; total=$curPos
             (( ++wrapped ))
         }
     }
@@ -188,11 +194,19 @@ _fs_inputHandler() {
             g)
                 if [[ $wholeInput == "g" ]] ;then
                     curPos=0; needsToStop="true"
+                    [[ ${files[curPos]} =~ $searchTerm ]] \
+                        && foundPos=$curPos
                 else
                     wholeInput=""
                 fi
             ;;
-            G) curPos=$((${#files[@]}-1)); needsToStop="true" ;;
+            G)
+                curPos=$((filesCount-1))
+                [[ ${files[curPos]} =~ $searchTerm ]] \
+                    && foundPos=$curPos
+
+                needsToStop="true"
+            ;;
             [0-9]) repeat+=$input ;;
             # Up and down arrows
             [ABwWsSjJkK])
@@ -291,6 +305,7 @@ videofile_selector() {
     trap _fs_sigwinchHandler SIGWINCH
     local signals=( SIGINT SIGTERM SIGWINCH )
 
+    local filesCount="${#files[@]}"
     local filenameLengths=() longestFilenameLength=0 totalLines file nameLength
     for file in "${files[@]}" ;{
         totalLines=0 nameLength=${#file}
