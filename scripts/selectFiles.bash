@@ -104,10 +104,12 @@ _fs_updateCursor() {
 }
 _fs_search() {
     case $1 in
-        previous) local previous="1" ;;
+        next)      local next="1" ;;
+        previous)  local previous="1" ;;
+        backwards) local backwards="1" previous="1" ;;
     esac
     # New search term
-    [[ -z $1 && -z $previous ]] && {
+    [[ ( -z $previous || -n $backwards ) && -z $next ]] && {
         ! $isOnEmptyLine && echo
 
         # This is jank but there's not really a better way.
@@ -119,7 +121,7 @@ _fs_search() {
         trap "exec 3<&-" SIGINT
         exec 3<&0 # duplicate stdin
 
-            printf '/'
+            [[ -n $backwards ]] && printf '?' || printf '/'
             read -u 3 -r searchTerm 2>/dev/null \
                 || interruptedPrompt="$?"
 
@@ -178,6 +180,10 @@ _fs_inputHandler() {
     # TODO: Emacs bindings?
     while read -rsN 1 input ;do
         case "$input" in
+            "?")
+                _fs_search backwards && curPos="$foundPos"
+                needsToStop="true"
+            ;;
             /|f)
                 _fs_search "" && curPos="$foundPos"
                 needsToStop="true"
