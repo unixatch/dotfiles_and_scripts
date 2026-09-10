@@ -463,6 +463,12 @@ trash() {
         wait -f
     )
 }
+showTrashingDelay() {
+    local trash_time
+    mapfile -n 1 trash_time < ~/.trash_cleanup_time
+    qalc --terse \
+        '('"${trash_time[0]}"' - timestamp(now)) seconds'
+}
 showMarkdownOffline() {
     [[ -z "$*" || "$*" =~ --help|-h ]] && {
         echo "showMarkdownOffline [--browser|-b] <file.md>"
