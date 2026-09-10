@@ -522,6 +522,8 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
 
 call plug#begin()
+    Plug 'tpope/vim-fugitive'
+    Plug 'https://codeberg.org/lifepillar/vim-mucomplete'
     Plug 'vim-airline/vim-airline'
     Plug 'mbbill/undotree'
     Plug 'MarcWeber/vim-addon-mw-utils'

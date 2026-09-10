@@ -244,6 +244,7 @@ func ShowHunkList()
     tab copen
 endfunc
 noremap gq :call ShowHunkList()<CR>
+noremap <leader>g :tab Git<cr>
 imap <tab> <Plug>snipMateNextOrTrigger
 smap <tab> <Plug>snipMateNextOrTrigger
 nnoremap !u :UndotreeToggle<cr>
