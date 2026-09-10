@@ -166,13 +166,13 @@ cnoremap ,s s/\v\c//gc<left><left><left><left>
 cnoremap .s %s/\v\ccommit ([a-z0-9]*)\nAuthor:.*\nDate:.*\n/• \1:/gc
 
 " Replace within block scope
-" nnoremap gr :ALERename<cr>
+nnoremap gr :ALERename<cr>
 
 " For global replace
-nnoremap gr #:%s/\c<C-R>///gc<left><left><left><C-r>=getreg("/")[2:-3]<cr>
+nnoremap <leader>r #:%s/\c<C-R>///gc<left><left><left><C-r>=getreg("/")[2:-3]<cr>
 
 " For replacing within a range
-nnoremap gR #:,s/\c<C-R>///gc<home>
+nnoremap gR #:'<,'>s/\c<C-R>///gc<left><left><left>
 
 " Makes gf command open the file in a new tab
 " instead of directly
