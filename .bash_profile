@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ulimit -n 1000      # max amount of file descriptors
+ulimit -n 2500      # max amount of file descriptors
 ulimit -R 300000000 # real-time non-blocking time, 5 minutes
 ulimit -m 4000000   # max memory size: 4GB in kB
 ulimit -f 4000000   # file size:       2,048GB in 512 blocks
