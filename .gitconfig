@@ -57,7 +57,7 @@
     rp = restore --patch --unified=2 --inter-hunk-context=2
     rps = restore --patch --staged --unified=2 --inter-hunk-context=2
     l = log --stat --show-signature
-    lst = ls-tree --name-only -rt
+    lsf = ls-files
 
     # logging/status commands
     ls = log --oneline --graph
