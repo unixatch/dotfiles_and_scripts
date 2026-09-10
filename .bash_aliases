@@ -95,6 +95,8 @@ alias history="history | less" # | tac
 alias delta="delta --pager=less"
 # Open vim with tabs for each file
 alias vim="vim -p"
+alias view="view -p"
+alias wine="wine-stable"
 alias bat="
     bat \
         --chop-long-lines \
