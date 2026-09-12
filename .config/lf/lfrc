@@ -121,7 +121,7 @@ map sd ${{
 
     # Old code
 }}
-map sf !ffprobe -hide_banner "$f"
+map sf $ffprobe -hide_banner "$f" 2>&1 | $PAGER
 map E %{{
     baseName="${f##*/}"
     dirName="${baseName%.*}"
