@@ -54,6 +54,7 @@ let nkUsed = 0
 func UseNK()
     let g:nkUsed = 1
     set spell
+    set completeopt+=noselect
     call feedkeys("\<C-x>\<C-k>")
     return ""
 endfunc
@@ -65,7 +66,7 @@ augroup DisableSpellWhenNKWasUsed
         endif
         if g:nkUsed
            let g:nkUsed = 0
-           set nospell 
+           set nospell completeopt-=noselect
         endif
     endfunc
     au InsertLeave * call MaybeDisableSpell()
