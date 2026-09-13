@@ -73,6 +73,7 @@
 
     # diff commands
     d = diff --minimal
+    dcode = d -I'// (TODO|FIXME)*'
     ds = diff --stat
     dc = d --cached
     dcs = diff --staged --stat
