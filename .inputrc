@@ -41,7 +41,7 @@ $if mode=vi
         "diw": "bde"
         "ciw": "bdei"
     set keymap vi-insert
-        "\C-w": "iildBi"
+        "\C-w": " iidBxi"
         "\C-k": kill-line
     set keymap vi
 $endif
