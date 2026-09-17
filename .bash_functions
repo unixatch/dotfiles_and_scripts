@@ -473,7 +473,16 @@ trash() {
 }
 showTrashingDelay() {
     local trash_time
-    mapfile -n 1 trash_time < ~/.trash_cleanup_time
+    mapfile -n 1 trash_time < ~/.trash_cleanup_time || {
+        local originalCode=$?
+        [[ ! -e ~/.trash_cleanup_time ]] && {
+            printf '\e[31m%s\e[0m\n' \
+                   ".trash_cleanup_time doesn't exists," \
+                   "create it with trash"
+            return 1
+        }
+        return $originalCode
+    }
     qalc --terse \
         '('"${trash_time[0]}"' - timestamp(now)) seconds'
 }
