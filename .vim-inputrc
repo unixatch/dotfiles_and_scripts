@@ -61,12 +61,13 @@ endfunc
 augroup DisableSpellWhenNKWasUsed
     autocmd!
     func! MaybeDisableSpell()
+       set completeopt-=noselect
         if expand("%") =~ ".*/COMMIT_EDITMSG"
             return
         endif
         if g:nkUsed
            let g:nkUsed = 0
-           set nospell completeopt-=noselect
+           set nospell
         endif
     endfunc
     au InsertLeave * call MaybeDisableSpell()
