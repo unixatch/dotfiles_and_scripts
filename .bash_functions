@@ -128,11 +128,19 @@ crc32() {
     }
 }
 dumpUrls() {
-    [[ ! $1 =~ (flac|mp3|wav|aac|ogg)$ ]] && return 1
+    [[ "$#" == 0 || "$*" =~ --help|-h ]] && {
+        echo -e "Usage: dumpUrls [--force|--help|-f|-h] \e[90mURL\e[0m"
+        return 1
+    }
+    local grepCommand
+    [[ ! "$*" =~ --force|-f ]] && {
+        grepCommand=("| " grep -P "\.$1$")
+    } \
+    && [[ ! $1 =~ (flac|mp3|wav|aac|ogg)$ ]] && return 1
     lynx \
         -dump \
         -listonly \
-        -nonumbers "$2" | "grep" -P "\.$1$"
+        -nonumbers "$2" "${grepCommand[@]}"
 }
 dumpYoutubePlaylistUrls() (
     case "$1" in
