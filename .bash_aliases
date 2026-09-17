@@ -16,13 +16,11 @@ alias cls='
             } || printf "\e[A"
         )"
 '
-alias c="cls"
+alias c="cls" l="ls"
 alias ping="ping -c 5"
 # For typos
-alias cl="cls"
-alias cld="cls"
-alias giy="git"
-alias got="git"
+alias cl="cls" cld="cls" clw="cls"
+alias giy="git" got="git"
 
 alias grep="grep --color=always --perl-regexp"
 alias shred="shred --zero"
