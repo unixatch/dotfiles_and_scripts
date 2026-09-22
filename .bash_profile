@@ -107,6 +107,8 @@ bind -m vi-insert -x '"\C-l":"clear"'
 bind -m vi-insert -x '"\el":"clear; ls"'
 
 export usr_bin="$PREFIX/bin/"
+USER="${ id -un; }"
+export USER
 export EDITOR="vim"
 export HISTIGNORE="giy*:git shoe*:git f:cld:c"
 export HISTFILESIZE=2500
@@ -117,7 +119,7 @@ GPG_TTY=$(tty)
 export GPG_TTY
 # Weird gpg stuff
 [[ -f $HOME/.gnupg/public-keys.d/pubring.db.lock ]] && {
-    rm "$HOME/.gnupg/public-keys.d/pubring.db.lock"
+    "rm" "$HOME/.gnupg/public-keys.d/pubring.db.lock"
 }
 
 clear
