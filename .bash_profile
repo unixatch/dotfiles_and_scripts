@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ulimit -n 2500      # max amount of file descriptors
 ulimit -R 300000000 # real-time non-blocking time, 5 minutes

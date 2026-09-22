@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 promptExitCode() {
     # Only when non-zero and no SIGINT
