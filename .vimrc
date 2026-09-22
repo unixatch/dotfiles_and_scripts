@@ -522,19 +522,29 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
 
 call plug#begin()
+    " Git plugin
     Plug 'tpope/vim-fugitive'
     Plug 'https://codeberg.org/lifepillar/vim-mucomplete'
+    " status line plugin
     Plug 'vim-airline/vim-airline'
+    " An interface for all undo commands
     Plug 'mbbill/undotree'
     Plug 'MarcWeber/vim-addon-mw-utils'
+    " snippets plugin
     Plug 'garbas/vim-snipmate'
+    " Second git plugin that is a bit more useful/practical
     Plug 'airblade/vim-gitgutter'
     Plug 'lverweijen/vim-irreplaceable'
+    " Javascript syntax highlighting
     Plug 'pangloss/vim-javascript'
+    " Same for JSON
     Plug 'elzr/vim-json'
+    " Same for lua
     Plug 'tbastos/vim-lua'
+    " Same for markdown + other niceties
     Plug 'preservim/vim-markdown'
     Plug 'vim-python/python-syntax'
+    " Indentation plugin
     Plug 'tpope/vim-sleuth'
     "Plug 'wfxr/minimap.vim'
     "Plug 'eliba2/vim-node-inspect'
