@@ -5,7 +5,7 @@ alias ls="
         --human-readable \
         --group-directories-first \
         --classify --time-style=long-iso \
-        --sort=size \
+        --sort=size --reverse \
 "
 alias clear='printf "\e[H\e[2J\e[3J"'
 alias cls='

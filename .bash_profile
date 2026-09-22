@@ -127,6 +127,6 @@ echo -ne "\n\033[91m"
 echo \
 ﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊
 echo -ne "\033[0m"
-ls --color=always --format=vertical --sort=size
+ls --color=always --format=vertical --sort=size --reverse
 echo -ne "$cleanupMsg\n"
 
