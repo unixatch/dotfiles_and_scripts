@@ -522,6 +522,8 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_ShortIndicators = 1
 
 call plug#begin()
+    " Format normal text
+    Plug 'godlygeek/tabular'
     " Git plugin
     Plug 'tpope/vim-fugitive'
     Plug 'https://codeberg.org/lifepillar/vim-mucomplete'
