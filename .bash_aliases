@@ -69,11 +69,9 @@ alias yt-dlp="
         --embed-metadata --write-automatic-subs --embed-subs \
         --format-sort='width:1920,height:1080,fps:30' \
         --sponsorblock-remove sponsor,selfpromo,interaction \
-        --sleep-subtitles 1.1 \
-        --sleep-requests 1.1 \
-        --sleep-interval 0.2 \
-        --max-sleep-interval 0.5 \
-        --concurrent-fragments 16 \
+        --sleep-subtitles 1.1 --sleep-requests 1.1 \
+        --sleep-interval 0.2 --max-sleep-interval 0.5 \
+        --concurrent-fragments 8 \
 "
 alias yt-dlp-no-subs="yt-dlp --no-embed-subs --no-write-automatic-subs"
 # Best audio format for yt-dlp
