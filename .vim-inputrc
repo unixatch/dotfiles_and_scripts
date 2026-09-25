@@ -262,5 +262,5 @@ nnoremap !u :UndotreeToggle<cr>
 " ALE shortcuts
 noremap <leader><space> :ALEGoToImplementation<cr>
 noremap <leader><leader> :ALEFindReferences -relative<cr>
-noremap <leader>s :ALESymbolSearch -relative 
+noremap <leader>s g*:nohlsearch<cr>:ALESymbolSearch -relative <C-r>/<cr>
 
