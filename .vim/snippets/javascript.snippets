@@ -10,8 +10,14 @@ snippet /**
 	/**
 	 * ${0}
 	 */
+snippet /*
+	/* ${0} */
 snippet =>
 	() => {${0}}
+snippet static
+	static ${1}(${2}) {
+		${0}
+	}
 snippet func
 	function ${1}(${2}) {
 		${0}
@@ -30,6 +36,10 @@ snippet forof
 	for (const i of ${1}) {
 		${0}
 	}
+snippet forin
+	for (const i in ${1}) {
+		${0}
+	}
 snippet if
 	if (${1}) {
 		${0}
@@ -42,6 +52,10 @@ snippet cl
 	console.log(${0})
 snippet ce
 	console.error(${0})
+snippet prom
+	new Promise((resolve, reject) => {
+		$0
+	});
 snippet pexit
 	process.exit(${0})
 snippet switch
