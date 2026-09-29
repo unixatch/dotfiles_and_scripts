@@ -132,3 +132,5 @@ echo -ne "\033[0m"
 ls --color=always --format=vertical --sort=size --reverse
 echo -ne "$cleanupMsg\n"
 
+source "$HOME"/.local/share/leaf/completions/leaf.bash
+
