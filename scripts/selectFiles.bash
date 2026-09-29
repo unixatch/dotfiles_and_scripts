@@ -205,6 +205,7 @@ _fs_inputHandler() {
             g)
                 if [[ $wholeInput == "g" ]] ;then
                     curPos=0; needsToStop="true"
+                    [[ -n $searchTerm ]] &&
                     [[ ${files[curPos]} =~ $searchTerm ]] \
                         && foundPos=$curPos
                 else
@@ -213,6 +214,7 @@ _fs_inputHandler() {
             ;;
             G)
                 curPos=$((filesCount-1))
+                [[ -n $searchTerm ]] &&
                 [[ ${files[curPos]} =~ $searchTerm ]] \
                     && foundPos=$curPos
 
