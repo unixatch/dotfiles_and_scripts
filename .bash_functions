@@ -658,9 +658,9 @@ showVideoDescription() {
     printf "\e[90m%s\e[0m\r" "Getting the description..."
     local ytDlpOutput
     ytDlpOutput="${
-        yt-dlp \
+        'yt-dlp' \
             --print description \
-            --skip-download "$1"
+            --simulate "$1"
     }"
     # Prints - equal to the amount of COLUMNS
     printf -- '-%.0s' {0..74}; echo

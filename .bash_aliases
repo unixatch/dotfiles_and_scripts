@@ -79,6 +79,8 @@ alias yt-dlp-no-subs="yt-dlp --no-embed-subs --no-write-automatic-subs"
 alias yt-dlp-audio="
     yt-dlp \
         --output '%(title)s.%(ext)s' \
+        --no-sponsorblock \
+        --no-write-automatic-subs --no-embed-subs \
         --format-sort='' \
         --format='bestaudio/best' \
         --extract-audio \
