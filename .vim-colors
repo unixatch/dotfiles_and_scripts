@@ -15,6 +15,7 @@ highlight Tabline    guibg=#707070
 highlight Type       guifg=#97ff97
 highlight MatchParen guibg=#00cfcf guifg=#141414
 highlight CursorLine guibg=#1f1f1f
+highlight CurSearch  guibg=#ffffff guifg=#888888
 
 " Some changes taken from catppuccin but
 " also keept desert's text
