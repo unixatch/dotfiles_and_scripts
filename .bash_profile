@@ -123,7 +123,7 @@ export GPG_TTY
 }
 
 clear
-cd ~/storage/downloads/ || exit 1
+"cd" ~/storage/downloads/ || exit 1
 cal --monday
 echo -ne "\n\033[91m"
 echo \

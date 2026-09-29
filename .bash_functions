@@ -688,4 +688,18 @@ listArchiveContents() {
     }
     7z l "$file" | less
 }
+d() {
+    # Prettify dir stack of dirs -v output
+    local line firstLine list=()
+    while read -r line ;do
+        mapfile -d " " -t line <<< "$line"
+        firstLine="  \e[32m${line[0]}\e[0m"
+
+        #                  ↓ empty string
+        unset "line[0]" "line[1]"
+        list+=( "$firstLine  ${line[@]/%$'\n'}" )
+    done <<< "${ dirs -v; }"
+
+    printf '%b\n' "${list[@]}"
+}
 

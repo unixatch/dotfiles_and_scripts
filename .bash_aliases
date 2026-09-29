@@ -18,6 +18,7 @@ alias cls='
             } || printf "\e[A"
         )"
 '
+alias cd="builtin pushd >/dev/null" p="popd >/dev/null"
 alias c="cls" l="ls"
 alias ping="ping -c 5"
 # For typos
