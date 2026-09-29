@@ -142,17 +142,22 @@ _fs_search() {
             : ${foundPos:-0}
     ))
     local total=$(( previous ? 0 : filesCount ))
-    local file wrapped="0" found="false"
-    # Backwards & Forwards search
-    for ((
-        i != 0 && i < filesCount-1
-            && (previous ? (i -= 1) : (i += 1)) ;
 
-        previous ? i >= total : i < total ;
-        previous ? --i : ++i
+    # Manages edge cases at the borders
+    # while also avoiding to match the same file again immediately
+    if (( previous )) ;then
+             (( (i -= 1) < 0 )) && i=$(( filesCount-1 ))
+    else
+        (( (i += 1) >= total )) && i=0
+    fi
+
+    # Backwards & Forwards search
+    local file wrapped="0" found="false"
+    for ((
+       ; previous ? i >= total : i < total ;
+         previous ? --i : ++i
     )) ;{
-        [[ ${files[i]} =~ $searchTerm ]] &&
-        (( foundPos != i )) && {
+        [[ ${files[i]} =~ $searchTerm ]] && {
             foundPos=$i; found="true"
             break
         }
