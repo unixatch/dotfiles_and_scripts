@@ -642,6 +642,28 @@ listVideoFilesBySize() {
     shopt -u nullglob
     printf '%s\n' "${videoFiles[@]}"
 }
+showTitle() {
+    ! command -v yt-dlp &>/dev/null && {
+        printf '\e[31m%s\e[0m\n' "yt-dlp program is required"
+        return 127
+    }
+    printf "\e[90m%s\e[0m\r" "Getting the title..."
+    local ytDlpOutput
+    ytDlpOutput="${
+        'yt-dlp' \
+            --print '%(title)s [%(uploader)s]' \
+            --simulate "$1"
+    }"
+    printf '%s\n' "$ytDlpOutput"
+}
+showTitleInFile() {
+    ! command -v exiftool &>/dev/null && {
+        printf '\e[31m%s\e[0m\n' "exiftool program is required"
+        return 127
+    }
+    # shellcheck disable=2016
+    exiftool -p '$Title [$Artist]' "$1"
+}
 showVideoDescriptionInFile() {
     ! command -v exiftool &>/dev/null && {
         printf '\e[31m%s\e[0m\n' "exiftool program is required"
