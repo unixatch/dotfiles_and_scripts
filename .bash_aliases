@@ -23,6 +23,7 @@ alias c="cls" l="ls"
 alias ping="ping -c 5"
 # For typos
 alias cl="cls" cld="cls" clw="cls"
+alias lg="lazygit"
 alias giy="git" got="git"
 
 alias grep="grep --color=always --perl-regexp"

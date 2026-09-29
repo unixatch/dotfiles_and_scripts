@@ -24,16 +24,16 @@ gui:
     sidePanels:
         # - [status]
         - [files, worktrees, submodules]
-        - [branches, remotes, tags]
+        # - [remotes, tags]
         - [commits, reflog]
-        - [stash]
+        - [stash, branches]
     mainPanelSplitMode: flexible
     enlargedSideViewLocation: left
     wrapLinesInStagingView: true
     useHunkModeInStagingView: true
     language: auto
     timeFormat: 02 Jan 06
-    shortTimeFormat: 3:04PM
+    shortTimeFormat: 15:04 MST
     theme:
         activeBorderColor:
             - green
@@ -256,10 +256,10 @@ keybinding:
         allBranchesLogGraph: a
         allBranchesLogGraphReverse: A
     files:
-        commitChanges: c
+        commitChanges: C
         commitChangesWithoutHook: w
         amendLastCommit: A
-        commitChangesWithEditor: C
+        commitChangesWithEditor: c
         findBaseCommitForFixup: <ctrl+f>
         confirmDiscard: x
         ignoreFile: i
@@ -267,7 +267,7 @@ keybinding:
         stashAllChanges: S
         viewStashOptions: s
         toggleStagedAll: a
-        viewResetOptions: "" # D
+        viewResetOptions: D
         fetch: f
         toggleTreeView: '`'
         openMergeOptions: M
@@ -299,7 +299,7 @@ keybinding:
         squashDown: s
         renameCommit: r
         renameCommitWithEditor: R
-        viewResetOptions: "" # g
+        viewResetOptions: D
         markCommitAsFixup: f
         setFixupMessage: c
         createFixupCommit: F
