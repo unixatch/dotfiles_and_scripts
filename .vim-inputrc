@@ -14,6 +14,8 @@ func Eatchar(pat)
    return (c =~ a:pat) ? '' : c
 endfunc
 ab #! #!/usr/bin/env bash<C-r>=Eatchar('\s')<cr>
+" docs checker marker
+ab #a # ADDED: <><left><C-r>=Eatchar('\s')<cr>
 
 " Change paste behaviour
 noremap p P
