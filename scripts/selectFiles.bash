@@ -254,7 +254,14 @@ _fs_inputHandler() {
                 needsToStop="true"
             ;;
             # Selector
-            " ")
+            " "|"C")
+                # Broken arrow escape sequence
+                [[ $input == C ]] &&
+                [[ ! $wholeInput =~ $arrowRegex ]] && {
+                    wholeInput=""
+                    continue
+                }
+
                 if [[ -n ${selection[$curPos]} ]] ;then
                     unset "selection[curPos]"
                     $moveTheCursor && ((curPos++))
