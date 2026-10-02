@@ -656,22 +656,6 @@ showTitle() {
     }"
     printf '%s\n' "$ytDlpOutput"
 }
-showTitleInFile() {
-    ! command -v exiftool &>/dev/null && {
-        printf '\e[31m%s\e[0m\n' "exiftool program is required"
-        return 127
-    }
-    # shellcheck disable=2016
-    exiftool -p '$Title [$Artist]' "$1"
-}
-showVideoDescriptionInFile() {
-    ! command -v exiftool &>/dev/null && {
-        printf '\e[31m%s\e[0m\n' "exiftool program is required"
-        return 127
-    }
-    # shellcheck disable=2016
-    exiftool -p '$Description' "$1" | less
-}
 showVideoDescription() {
     ! command -v yt-dlp &>/dev/null && {
         printf '\e[31m%s\e[0m\n' "yt-dlp program is required"
@@ -688,6 +672,32 @@ showVideoDescription() {
     printf -- '-%.0s' {0..74}; echo
     printf '%s\n' "$ytDlpOutput"
     printf -- '-%.0s' {0..74}; echo
+}
+showVideoMetadataInFile() {
+    ! command -v exiftool &>/dev/null && {
+        printf '\e[31m%s\e[0m\n' "exiftool program is required"
+        return 127
+    }
+    (( ! $# )) || [[ $* =~ --help|-h ]] && {
+        printf '%s\n' \
+               "Usage: showVideoMetadataInFile [d|D|t|description|duration|title] <filename>" \
+               "    d|description: shows the description;" \
+               "    D|duration:    shows the duration;" \
+               "    t|title:       shows the title + artist;"
+        return 1
+    }
+
+    local keyword paging="false"
+    case "$1" in
+        D|duration)    keyword="\$Duration" ;;
+        t|title)       keyword="\$Title [\$Artist]" ;;
+        d|description) keyword="\$Description"; paging="true" ;;
+    esac
+    $paging && {
+        exiftool -printFormat "$keyword" "$2" | $PAGER
+        return
+    }
+    exiftool -printFormat "$keyword" "$2"
 }
 listArchiveContents() {
     ! command -v 7z &>/dev/null && {
