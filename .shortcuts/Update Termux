@@ -13,12 +13,16 @@ closeProcess() {
     kill $CURRENT_SUB_PROCESS
     echo
 }
+close() { exit 0; }
 getPIDAndWait() {
     CURRENT_SUB_PROCESS=$!
     wait
 }
 # Skips part of the script instead of closing it
 trap closeProcess SIGINT
+# Closes everything immediately if Ctrl-\ is pressed
+# or SIGTERM is received
+trap close SIGQUIT SIGTERM
 
 termux-wake-lock
 clear
