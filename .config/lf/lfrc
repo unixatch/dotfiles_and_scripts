@@ -14,9 +14,12 @@ set period 2     # Reload files on screen
 set info size    # Shoe file sizes
 set dircounts    # Show folder sizes
 set promptfmt "\033[1;34m%w\033[0m/%f"
+set incfilter true
+set filtermethod regex
 
 map j up
 map k down
+map / filter
 
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
