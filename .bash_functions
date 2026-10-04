@@ -461,7 +461,7 @@ trash() {
                 mv "$file" "$HOME/.trash/" || exit
 
                 # shellcheck disable=2059
-                if [[ -e "$HOME/.trash/$file" ]] ;then
+                if [[ -e "$HOME/.trash/${file##*\/}" ]] ;then
                     printf "$trashedMsg" "$file"
                 else
                     printf "$notMmovedMsg" "$file"
