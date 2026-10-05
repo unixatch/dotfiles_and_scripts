@@ -79,7 +79,8 @@
     dcs = diff --staged --stat
 
     rb = rebase --interactive
-    c = config --global --edit
+    c = commit
+    ce = config --global --edit
     cl = config --global --list
     logFsck = !git l $(\
         git fsck \
