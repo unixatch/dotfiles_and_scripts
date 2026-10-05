@@ -24,6 +24,14 @@ map / filter
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
+map o ${{
+    # Obtain file names as an array
+    mapfile -t files <<< "$fx"
+    for (( i = 0; i < ${#files[@]}; ++i )) ;{
+        file="${files[i]}"
+        [[ -f $file ]] && termux-open "$file"
+    }
+}}
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
 map Ip ${{
