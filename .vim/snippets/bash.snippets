@@ -32,6 +32,8 @@ snippet echo
 	echo "$0"
 snippet printf
 	printf '$0' "$1"
+snippet dec
+	declare -p ${0}
 snippet mapfile
 	mapfile -t $1 <<< "$0"
 snippet wr
