@@ -56,21 +56,17 @@ highlight GitGutterDeleteLine ctermfg=1
 
 " Different CursorLine so that it's easier
 " to see while going through files
-augroup netwrCursorLine
-    autocmd!
-    func! ChangeColors()
-        if &syntax == "netrw"
-            highlight CursorLine 
-            \    cterm=underline term=underline 
-            \    guibg=#1f1f1f
-        else
-            highlight CursorLine 
-            \    cterm=NONE term=NONE
-            \    guibg=#080812
-        endif
-    endfunc
-    au Syntax,WinEnter,BufWinEnter * call ChangeColors()
-augroup END
+au Syntax,WinEnter,BufWinEnter * {
+    if &syntax == "netrw"
+        highlight CursorLine 
+        \    cterm=underline term=underline 
+        \    guibg=#1f1f1f
+    else
+        highlight CursorLine 
+        \    cterm=NONE term=NONE
+        \    guibg=#080812
+    endif
+}
 
 " Disable show mode since we're building it on the status line
 set noshowmode

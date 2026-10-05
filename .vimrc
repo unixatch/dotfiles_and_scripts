@@ -38,61 +38,52 @@ augroup END
 
 " Opens a new tab dynamically
 " with git changes opened in less
-augroup showChanges_Alongside_GitCommitMessage
-    autocmd!
-    function AddTerminal()
-        let cwd = getcwd()
-        let isStaged = "[[ -n \"${ git status --porcelain; }\" ]]"
-        let unsetAndExit = "unset HISTFILE && exit;"
-        execute(":tab terminal")
+au VimEnter */COMMIT_EDITMSG ++once {
+    const cwd = getcwd()
+    const isStaged = "[[ -n \"${ git status --porcelain; }\" ]]"
+    const unsetAndExit = "unset HISTFILE && exit;"
+    execute(":tab terminal")
 
-        " cd into the cwd and cls || exit with 1
-        " THEN show the staged changes
-        "   OR show at least the last commit's changes
-        " AFTER that exit without saving the history
-        call feedkeys("
-        \   cd ".cwd." && cls || exit 1 \<cr>
-        \   ".isStaged." && {
-        \      git dc | delta --paging always;
-        \      ".unsetAndExit."
-        \   } || {
-        \      git show; ".unsetAndExit."
-        \   } \<cr>
-        \")
-        call feedkeys("\<C-x>:tabprevious | 1\<cr>")
-        " Needed because feedkeys is async
-        au BufEnter */COMMIT_EDITMSG
-            \call feedkeys(getline(1) == "" ? "i" : "")
-    endfunc
-    au VimEnter */COMMIT_EDITMSG call AddTerminal()
-augroup END
+    # cd into the cwd and cls || exit with 1
+    # THEN show the staged changes
+    #   OR show at least the last commit's changes
+    # AFTER that exit without saving the history
+    call feedkeys("
+    \   cd " .. cwd .. " && cls || exit 1 \<cr>
+    \   " .. isStaged .. " && {
+    \      git dc | delta --paging always;
+    \      " .. unsetAndExit .. "
+    \   } || {
+    \      git show; " .. unsetAndExit .. "
+    \   } \<cr>
+    \")
+    call feedkeys("\<C-x>:tabprevious | 1\<cr>")
+    # Needed because feedkeys is async
+    au BufEnter */COMMIT_EDITMSG ++once
+                \ if getline(1) == "" | call feedkeys("i") | endif
+}
 
 " Small tweaks only for
 " the file called COMMIT_EDITMSG
 augroup CommitMessageTweaks
     autocmd!
-    func! SetTextWidth()
-        let columns = execute(":set columns?")->substitute("^.*=", "", "")
-        let maxWidth=columns-20
-        let &textwidth=maxWidth
-    endfunc
-    au BufRead */.git/COMMIT_EDITMSG set noundofile
-    au BufWritePost */.git/COMMIT_EDITMSG set spell
-    au WinEnter */.git/COMMIT_EDITMSG call SetTextWidth()
+    au WinEnter */.git/COMMIT_EDITMSG ++once {
+        const columns  = execute(":set columns?")->substitute("^.*=", "", "")
+        const maxWidth = str2nr(columns) - 20
+        &textwidth = maxWidth
+    }
+    au BufWritePost */.git/COMMIT_EDITMSG ++once set spell
+    au BufRead      */.git/COMMIT_EDITMSG ++once set noundofile
 augroup END
 
 " Only for edit-and-execute-command
-augroup Bash_EditAndExecuteCommand
-    autocmd!
-    function ChangeFileType()
-        if getline("1") =~ "^node -e"
-            set filetype=javascript
-            return
-        endif
+au BufRead */usr/tmp/bash-fc.* ++once {
+    if getline("1") =~ "^node -e"
+        set filetype=javascript
+    else
         set filetype=bash
-    endfunc
-    au BufRead */usr/tmp/bash-fc.* call ChangeFileType()
-augroup END
+    endif
+}
 
 " No wrapping lines
 set nowrap
@@ -103,7 +94,7 @@ set termwinkey=<C-x>
 
 " Timeout for waiting before the next key sequence
 " Do not au!, it breaks colors
-au VimEnter * set timeoutlen=350 | set ttimeoutlen=350
+au VimEnter * ++once set timeoutlen=350 | set ttimeoutlen=350
 
 " Auto Ctrl-n
 " set autocomplete
@@ -125,7 +116,7 @@ augroup BashFiles
         \*/.bashrc,
         \*/.bash_profile set foldmethod=indent | set syntax=bash
     " Fixes lf syntax when using bash syntax
-    au VimEnter */lfrc set syntax=bash | set syntax=lf
+    au VimEnter */lfrc ++once set syntax=bash | set syntax=lf
 augroup END
 
 " Enables comment-install plugin
