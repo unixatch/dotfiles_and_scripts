@@ -243,6 +243,13 @@ tnoremap <M-Left>  <c-x>:tabprevious<cr>
 tnoremap <M-Right> <c-x>:tabnext<cr>
 
 " ————————— PLUGINS —————————
+" comment plugin
+au VimEnter * ++once {
+    nmap  gc  <Plug>(comment-toggle-line)
+    unmap gcc
+}
+
+" GitGutter
 func ShowPreviewHunk()
     GitGutterPreviewHunk
     wincmd j
@@ -256,7 +263,9 @@ func ShowHunkList()
     tab copen
 endfunc
 noremap gq :call ShowHunkList()<CR>
+" vim-fugitive
 noremap <leader>g :tab Git<cr>
+" snipMate
 imap <tab> <Plug>snipMateNextOrTrigger
 smap <tab> <Plug>snipMateNextOrTrigger
 nnoremap !u :UndotreeToggle<cr>
