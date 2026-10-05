@@ -36,6 +36,10 @@ augroup fix_Improve_InsertScrolling
     au InsertLeave * set scrolloff=3 | :ALEToggle
 augroup END
 
+func! DeleteAfterwardsCMDLine()
+    return getcmdline()->strcharpart(0, getcmdpos()-1)
+endfunc
+
 " Opens a new tab dynamically
 " with git changes opened in less
 au VimEnter */COMMIT_EDITMSG ++once {
@@ -470,9 +474,11 @@ endfunc
 " ALE
 let g:ale_set_signs = v:false
 let g:ale_virtualtext_cursor = 0
+let g:ale_update_tagstack = 1
 " tsserver is default for js
 let g:ale_linters = {
-\    "javascript": ["quick-lint-js", "deno"]
+\    "javascript": ["quick-lint-js", "deno"],
+\    "markdown": ["pandoc"]
 \}
 let g:javascript_plugin_jsdoc = 1
 " Fixes performance
@@ -486,6 +492,8 @@ let g:gitgutter_highlight_linenrs = 1
 let g:gitgutter_close_preview_on_escape = 1
 let g:gitgutter_sign_modified = '✍'
 let g:gitgutter_sign_removed  = '⌇'
+
+hi DiffAdd ctermfg=10
 
 " Airline settings
 let g:airline_extensions = []
