@@ -478,7 +478,8 @@ let g:ale_update_tagstack = 1
 " tsserver is default for js
 let g:ale_linters = {
 \    "javascript": ["quick-lint-js", "deno"],
-\    "markdown": ["pandoc"]
+\    "markdown": ["pandoc"],
+\    "vim": ["vint"]
 \}
 let g:javascript_plugin_jsdoc = 1
 " Fixes performance
