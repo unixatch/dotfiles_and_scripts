@@ -15,7 +15,7 @@ func Eatchar(pat)
 endfunc
 ab #! #!/usr/bin/env bash<C-r>=Eatchar('\s')<cr>
 " docs checker marker
-ab #a # ADDED: <><left><C-r>=Eatchar('\s')<cr>
+ab #a # :ADDED: <><left><C-r>=Eatchar('\s')<cr>
 
 " Change paste behaviour
 noremap p P
@@ -203,7 +203,7 @@ noremap tp :tabprevious<CR>
 noremap tt :tabnew <bar> tabprevious <bar> quit <bar> tabnext <CR><C-^>
 
 " New tab terminal
-noremap tn :tab terminal<cr>
+noremap tn :tab terminal<cr>printf '\e[H\e[2J'<cr>
 
 " Tab move back in terminal mode
 " And tab move forward in terminal mode
