@@ -1,3 +1,14 @@
+"
+" Maintainer: unixatch
+"
+" Github Link: https://github.com/unixatch/dotfiles_and_scripts
+"
+" This configuration was initially a clone of
+"   https://github.com/amix/vimrc
+" but now it has grown with its own identity.
+" Basically a small fork, so to speak.
+"
+
 " Sets always a blinking bar
 let &t_SI .= "\<Esc>[5 q"
 let &t_SR .= "\<Esc>[5 q"
