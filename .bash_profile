@@ -7,7 +7,7 @@ ulimit -f 4000000   # file size:       2,048GB in 512 blocks
 ulimit -u 1250      # amount of processes
 
 trashCleanupTimeFile=~/.trash_cleanup_time
-[[ -f $trashCleanupTimeFile ]] && {
+(( SHLVL < 2 )) && [[ -f $trashCleanupTimeFile ]] && {
     mapfile -t time < "$trashCleanupTimeFile"
     # Enough time has passed
     (( EPOCHSECONDS > time )) && {
@@ -122,15 +122,17 @@ export GPG_TTY
     "rm" "$HOME/.gnupg/public-keys.d/pubring.db.lock"
 }
 
-clear
-"cd" ~/storage/downloads/ || exit 1
-cal --monday
-echo -ne "\n\033[91m"
-echo \
-﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊
-echo -ne "\033[0m"
-ls --color=always --format=vertical --sort=size --reverse
-echo -ne "$cleanupMsg\n"
-
+# Avoids changing directory when it shouldn't
+(( SHLVL == 1 )) && {
+    clear
+    "cd" ~/storage/downloads/ || exit 1
+    cal --monday
+    echo -ne "\n\033[91m"
+    echo \
+    ﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊﹊
+    echo -ne "\033[0m"
+    ls --color=always --format=vertical --sort=size --reverse
+    echo -ne "$cleanupMsg\n"
+}
 source "$HOME"/.local/share/leaf/completions/leaf.bash
 
