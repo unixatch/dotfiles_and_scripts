@@ -194,16 +194,16 @@ tmap <Esc>OF <Esc>OF
 noremap <c-n> :set number!<CR>
 
 " Tab move next
-noremap tm :tabnext<CR>
+noremap <silent> tm :tabnext<CR>
 
 " Tab move back
-noremap tp :tabprevious<CR>
+noremap <silent> tp :tabprevious<CR>
 
 " Tab split
-noremap tt :tabnew <bar> tabprevious <bar> quit <bar> tabnext <CR><C-^>
+noremap <silent> tt :tabnew <bar> tabprevious <bar> quit <bar> tabnext <CR><C-^>
 
 " New tab terminal
-noremap tn :tab terminal<cr><c-x>:setlocal nonumber norelativenumber<cr>printf '\e[H\e[2J'<cr>
+noremap <silent> tn :tab terminal<cr><c-x>:setlocal nonumber norelativenumber<cr>printf '\e[H\e[2J'<cr>
 
 " Tab move back in terminal mode
 " And tab move forward in terminal mode
@@ -222,7 +222,7 @@ tnoremap <ScrollWheelUp> <up>
 tnoremap <ScrollWheelDown> <down>
 
 " Explore on E
-noremap <leader>e :tabnew <bar> Explore<cr>
+noremap <silent> <leader>e :tabnew <bar> Explore<cr>
 
 " Directly creates a new tab and edit the given file
 func! EditFile()
