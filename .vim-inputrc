@@ -78,8 +78,8 @@ inoremap <expr> nk UseNK()
 " End of dictionary completion
 
 " Toggle spelling or paste mode
-noremap z! :set spell!<cr>
-noremap !p :set paste!<cr>
+noremap z! :setlocal spell!<cr>
+noremap !p :setlocal paste!<cr>
 
 " Better f/F
 func FindChar(direction)
@@ -203,7 +203,7 @@ noremap tp :tabprevious<CR>
 noremap tt :tabnew <bar> tabprevious <bar> quit <bar> tabnext <CR><C-^>
 
 " New tab terminal
-noremap tn :tab terminal<cr>printf '\e[H\e[2J'<cr>
+noremap tn :tab terminal<cr><c-x>:setlocal nonumber norelativenumber<cr>printf '\e[H\e[2J'<cr>
 
 " Tab move back in terminal mode
 " And tab move forward in terminal mode
@@ -214,7 +214,7 @@ tnoremap <C-n> <c-x>:tabnext<CR>
 tnoremap <leader>p <c-x>"
 
 " Enable normal mode for terminal
-tnoremap <c-b> <c-\><c-n><c-x>:set nonumber<cr>
+tnoremap <c-b> <c-\><c-n>
 
 " Makes scrolling up in a vim terminal more normal
 " when using man or less
