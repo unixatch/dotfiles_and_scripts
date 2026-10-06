@@ -457,7 +457,7 @@ hi DiffAdd ctermfg=10
 
 " Airline settings
 let g:airline_extensions = []
-let g:airline_experimental = 1
+" let g:airline_experimental = 1
 let g:airline_highlighting_cache = 1
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
