@@ -250,19 +250,14 @@ au VimEnter * ++once {
 }
 
 " GitGutter
-func ShowPreviewHunk()
-    GitGutterPreviewHunk
-    wincmd j
-endfunc
-noremap ghp :call ShowPreviewHunk()<cr>
-noremap ghs :GitGutterStageHunk<cr>
-noremap ghu :GitGutterUndoHunk<cr>
-noremap gi :GitGutterLineHighlightsToggle<CR>
-func ShowHunkList()
-    GitGutterQuickFixCurrentFile
-    tab copen
-endfunc
-noremap gq :call ShowHunkList()<CR>
+noremap ghp :GitGutterPreviewHunk <bar> wincmd j<cr>
+noremap ghs <Plug>(GitGutterStageHunk)
+noremap ghu <Plug>(GitGutterUndoHunk)
+noremap [c  <Plug>(GitGutterPrevHunk)
+noremap ]c  <Plug>(GitGutterNextHunk)
+noremap gi  <Plug>(GitGutterLineHighlightsToggle)
+noremap gq :GitGutterQuickFixCurrentFile <bar> tab copen<CR>
+
 " vim-fugitive
 noremap <leader>g :tab Git<cr>
 " snipMate
