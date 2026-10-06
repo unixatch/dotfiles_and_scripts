@@ -98,7 +98,7 @@ endfunc
 nnoremap <silent> f :<C-u>call FindChar(1)<CR>
 nnoremap <silent> F :<C-u>call FindChar(0)<CR>
 
-" Shoertcut for disabling search highlighting
+" Shortcut for disabling search highlighting
 noremap <silent> !n :nohlsearch<CR>
 
 " Faster esc

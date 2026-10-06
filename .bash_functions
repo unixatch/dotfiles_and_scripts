@@ -428,7 +428,7 @@ trash() {
         return 1
     }
     [[ -z "${files[*]}" ]] && {
-        . ./scripts/selectFiles.bash   || { _fs_cleanUpFuncs &>/dev/null; }
+        . ./scripts/selectFiles.bash || { _fs_cleanUpFuncs &>/dev/null; }
         videofile_selector \
             --incase --invert-jk \
             --sort '-size' . || local fSelectorExitCode=$?
