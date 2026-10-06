@@ -483,29 +483,28 @@ let g:undotree_ShortIndicators = 1
 
 call plug#begin()
     " Format normal text
-    Plug 'godlygeek/tabular'
+    Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
     " Git plugin
-    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-fugitive', { 'on': 'Git' }
     Plug 'https://codeberg.org/lifepillar/vim-mucomplete'
     " status line plugin
     Plug 'vim-airline/vim-airline'
     " An interface for all undo commands
-    Plug 'mbbill/undotree'
-    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " snippets plugin
     Plug 'garbas/vim-snipmate'
     " Second git plugin that is a bit more useful/practical
     Plug 'airblade/vim-gitgutter'
     Plug 'lverweijen/vim-irreplaceable'
     " Javascript syntax highlighting
-    Plug 'pangloss/vim-javascript'
+    Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
     " Same for JSON
-    Plug 'elzr/vim-json'
+    Plug 'elzr/vim-json', { 'for': 'json' }
     " Same for lua
-    Plug 'tbastos/vim-lua'
+    Plug 'tbastos/vim-lua', { 'for': 'lua' }
     " Same for markdown + other niceties
-    Plug 'preservim/vim-markdown'
-    Plug 'vim-python/python-syntax'
+    Plug 'preservim/vim-markdown', { 'for': 'markdown' }
+    Plug 'vim-python/python-syntax', { 'for': 'python' }
     " Indentation plugin
     Plug 'tpope/vim-sleuth'
     "Plug 'wfxr/minimap.vim'
