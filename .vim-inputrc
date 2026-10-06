@@ -200,7 +200,7 @@ noremap <silent> tm :tabnext<CR>
 noremap <silent> tp :tabprevious<CR>
 
 " Tab split
-noremap <silent> tt :tabnew <bar> tabprevious <bar> quit <bar> tabnext <CR><C-^>
+noremap <silent> tt :tab split <bar> tabprevious <bar> quit <bar> tabnext <CR>
 
 " New tab terminal
 noremap <silent> tn :tab terminal<cr><c-x>:setlocal nonumber norelativenumber<cr>printf '\e[H\e[2J'<cr>
@@ -222,13 +222,13 @@ tnoremap <ScrollWheelUp> <up>
 tnoremap <ScrollWheelDown> <down>
 
 " Explore on E
-noremap <silent> <leader>e :tabnew <bar> Explore<cr>
+noremap <silent> <leader>e :Texplore<cr>
 
 " Directly creates a new tab and edit the given file
 func! EditFile()
     let filepath = input("Enter a file path: ", "", "file")
     if filereadable(expand(filepath))
-        execute $"normal! :tabnew\<cr>:e {filepath}\<cr>"
+        execute $"normal! :tabnew {filepath}\<cr>"
     endif
 endfunc
 noremap <leader>t :call EditFile()<cr>
