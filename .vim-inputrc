@@ -105,19 +105,19 @@ noremap <silent> !n :nohlsearch<CR>
 inoremap ii <esc>
 inoremap i8 <C-o>
 
-function HighlightRange()
-    let startOfSel = line("'<")
-    let endOfSel = line("'>")
-    let listOfPos = 
-      \ getline(startOfSel, endOfSel)->map({
-      \    l -> startOfSel + l
-      \ })
+" function HighlightRange()
+"     let startOfSel = line("'<")
+"     let endOfSel = line("'>")
+"     let listOfPos = 
+"       \ getline(startOfSel, endOfSel)->map({
+"       \    l -> startOfSel + l
+"       \ })
 
-    call matchaddpos("SpellCap", listOfPos)
-endfunc
-vnoremap <leader>h :call HighlightRange()<cr>
-" clear all the highlighted lines
-nnoremap <leader>c :call clearmatches()<CR>
+"     call matchaddpos("SpellCap", listOfPos)
+" endfunc
+" vnoremap <leader>h :call HighlightRange()<cr>
+" " clear all the highlighted lines
+" nnoremap <leader>c :call clearmatches()<CR>
 
 " toggle folding
 noremap - za
