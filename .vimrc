@@ -505,7 +505,7 @@ call plug#begin()
     " Same for markdown + other niceties
     Plug 'preservim/vim-markdown', { 'for': 'markdown' }
     Plug 'vim-python/python-syntax', { 'for': 'python' }
-    " Indentation plugin
+    " Indentation detection plugin
     Plug 'tpope/vim-sleuth'
     "Plug 'lverweijen/vim-irreplaceable'
     "Plug 'wfxr/minimap.vim'
