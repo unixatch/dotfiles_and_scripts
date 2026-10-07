@@ -493,6 +493,8 @@ call plug#begin()
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " snippets plugin
     Plug 'garbas/vim-snipmate'
+        " snipmate dependency
+        Plug 'MarcWeber/vim-addon-mw-utils'
     " Second git plugin that is a bit more useful/practical
     Plug 'airblade/vim-gitgutter'
     " Javascript syntax highlighting
