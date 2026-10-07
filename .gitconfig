@@ -10,6 +10,7 @@
     missingCommitsCheck = warn
 [user]
     name = unixatch
+    signingkey = unixatch
 [core]
     autocrlf = input
     compression = 9
@@ -91,6 +92,8 @@
     ff = only
 [credential]
     credentialStore = gpg
+    helper = git-credential-manager
+    useHttpPath = true
 [commit]
     gpgsign = true
 
