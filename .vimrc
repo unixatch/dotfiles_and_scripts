@@ -495,7 +495,6 @@ call plug#begin()
     Plug 'garbas/vim-snipmate'
     " Second git plugin that is a bit more useful/practical
     Plug 'airblade/vim-gitgutter'
-    Plug 'lverweijen/vim-irreplaceable'
     " Javascript syntax highlighting
     Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
     " Same for JSON
@@ -507,6 +506,7 @@ call plug#begin()
     Plug 'vim-python/python-syntax', { 'for': 'python' }
     " Indentation plugin
     Plug 'tpope/vim-sleuth'
+    "Plug 'lverweijen/vim-irreplaceable'
     "Plug 'wfxr/minimap.vim'
     "Plug 'eliba2/vim-node-inspect'
 call plug#end()
