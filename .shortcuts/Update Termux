@@ -38,7 +38,7 @@ function upgradeProject {
     printf '%b' "$Gray"
     pushd "$1" || return 1
         printf '%b' "$NORMAL"
-        npm upgrade
+        npm upgrade --min-release-age 4
         printf '%b' "$Gray\n"
     popd || return 1
     printf '%b' "$NORMAL"
