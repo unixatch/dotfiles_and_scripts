@@ -486,7 +486,6 @@ call plug#begin()
     Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
     " Git plugin
     Plug 'tpope/vim-fugitive', { 'on': 'Git' }
-    Plug 'https://codeberg.org/lifepillar/vim-mucomplete'
     " status line plugin
     Plug 'vim-airline/vim-airline'
     " An interface for all undo commands
