@@ -38,6 +38,8 @@ $if mode=vi
     set keymap vi-insert
         "ii": vi-movement-mode
     set keymap vi
+        "j": next-history
+        "k": previous-history
         "diw": "bde"
         "ciw": "bdei"
     set keymap vi-insert
