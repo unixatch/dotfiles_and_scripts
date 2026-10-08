@@ -95,7 +95,7 @@ alias showAllFunctions="compgen -c | less"
 alias history="history | less" # | tac 
 alias delta="delta --pager=less"
 # Open vim with tabs for each file
-alias vim="vim -p"
+alias vim="vim -p -X"
 alias view="view -p"
 alias wine="wine-stable"
 alias bat="
@@ -110,7 +110,4 @@ alias uni-search="uni \
 "
 alias updatePackageLock="npm i --package-lock-only"
 alias showMarkdowns="grip"
-
-# \n are kept if enabled in history
-alias enableMultilineHistory="shopt -s cmdhist && shopt -s lithist"
 
