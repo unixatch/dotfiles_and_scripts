@@ -34,6 +34,7 @@ map o ${{
 }}
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
+map Il $leaf "${ pwd; }"
 map Ip ${{
     # Obtain file names as an array
     mapfile -t lines <<< "$fx"
