@@ -93,7 +93,8 @@
     ff = only
 [credential]
     credentialStore = gpg
-    helper = git-credential-manager
+    helper = manager # git-credential-manager
+[credential "https://dev.azure.com"]
     useHttpPath = true
 [commit]
     gpgsign = true
