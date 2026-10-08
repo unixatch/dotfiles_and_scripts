@@ -458,7 +458,10 @@ hi DiffAdd ctermfg=10
 " Airline settings
 let g:airline_extensions = []
 " let g:airline_experimental = 1
+let g:airline_exclude_preview = 0
+let g:airline_detect_spelllang = 0
 let g:airline_highlighting_cache = 1
+
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_powerline_fonts = 1
@@ -466,9 +469,17 @@ let g:airline_section_c_only_filename = 1
 let g:airline_section_y = ""
 let g:airline_theme = "custumark"
 
-" Fixes mode's width
-au! User AirlineAfterInit 
-    \call airline#parts#define_minwidth('mode', 0)
+" Fixes mode's width and removes useless stuff
+au! User AirlineAfterInit {
+    const crypt = "\%\{airline#util#append\(airline#parts#crypt\(\),0\)\}"
+    const iminsert = "\%\{airline#util#append\(airline#parts#iminsert\(\),0\)\}"
+    g:airline_section_a = (
+        g:airline_section_a
+            ->substitute(crypt, "", "")
+            ->substitute(iminsert, "", "")
+    )
+    call airline#parts#define_minwidth('mode', 0)
+}
 
 " python-syntax
 let g:python_highlight_all = 1
