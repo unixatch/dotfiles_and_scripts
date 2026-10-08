@@ -57,7 +57,7 @@ editor = "vim"
 # Watch mode: automatically reload when the file changes
 # Only applies when opening a file (ignored for stdin)
 # Default: false
-watch = false
+watch = true
 
 # Extra file types shown in the file picker
 # Add other extensions to also show them (without the dot).
