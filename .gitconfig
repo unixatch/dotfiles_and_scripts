@@ -9,6 +9,7 @@
 [rebase]
     missingCommitsCheck = warn
 [user]
+    email = 76928074+unixatch@users.noreply.github.com
     name = unixatch
     signingkey = unixatch
 [core]
