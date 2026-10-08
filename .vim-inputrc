@@ -55,25 +55,16 @@ cnoremap <C-k> <C-\>e getcmdline()->strcharpart(0, getcmdpos()-1)<CR>
 let nkUsed = 0
 func UseNK()
     let g:nkUsed = 1
-    set spell
-    set completeopt+=noselect
+    set spell completeopt+=noselect
     call feedkeys("\<C-x>\<C-k>")
     return ""
 endfunc
-augroup DisableSpellWhenNKWasUsed
-    autocmd!
-    func! MaybeDisableSpell()
-       set completeopt-=noselect
-        if expand("%") =~ ".*/COMMIT_EDITMSG"
-            return
-        endif
-        if g:nkUsed
-           let g:nkUsed = 0
-           set nospell
-        endif
-    endfunc
-    au InsertLeave * call MaybeDisableSpell()
-augroup END
+au CompleteDone * {
+   set completeopt-=noselect
+   if g:nkUsed && expand("%") !~ ".*/COMMIT_EDITMSG"
+       g:nkUsed = 0 | set nospell
+   endif
+}
 inoremap <expr> nk UseNK()
 " End of dictionary completion
 
