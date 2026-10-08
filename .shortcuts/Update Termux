@@ -27,11 +27,25 @@ trap close SIGQUIT SIGTERM
 termux-wake-lock
 clear
 printf "$BOLD$Red%s$NORMAL:\n\n" "vim/plug"
-{
-    vim +PlugUpdate +PlugUpgrade +qa &>/dev/null
+# shellcheck disable=2015
+vim -e +'
+    try
+        PlugUpgrade
+        PlugUpdate
+    catch
+        cq 1
+    endtry
+
+    " In case it is successful
+    qa
+' &>/dev/null && {
     printf "$Gray%s$NORMAL\n\n" "Updated Vim plugins"
-} &
-getPIDAndWait
+} || {
+    (( $? == 2 )) && {
+        printf "$Red%s$NORMAL\n\n" "Failed to update Vim plugins"
+        exit
+    }
+}
 
 printf "$BOLD$Red%s$NORMAL:\n\n" "npm"
 function upgradeProject {
