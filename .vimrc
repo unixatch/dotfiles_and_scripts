@@ -526,7 +526,12 @@ call plug#begin()
 call plug#end()
 
 " Fixes vim-javascript's mess up with shebangs (#!)
-au BufRead,BufNewFile *.{mts,ts} set filetype=typescript
+func! <SNR>21_SelectJavascript()
+    if bufname() !~# '\v\.(ts|tsx|mts)$'
+       \ && getline(1) =~# '^#!.*/bin/\%(env\s\+\)\?node\>'
+        set filetype=javascript
+    endif
+endfunc
 
 " All my keybindings
 autocmd BufRead .vim-inputrc set filetype=vim
