@@ -523,6 +523,10 @@ call plug#begin()
     "Plug 'eliba2/vim-node-inspect'
 call plug#end()
 
+" Fixes vim-javascript's mess up with shebangs (#!)
+au BufRead,BufNewFile *.{mts,ts} set filetype=typescript
+
 " All my keybindings
 autocmd BufRead .vim-inputrc set filetype=vim
 source ~/.vim-inputrc
+
