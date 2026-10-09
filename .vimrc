@@ -439,7 +439,9 @@ let g:ale_linters = {
 \    "markdown": ["pandoc"],
 \    "vim": ["vint"]
 \}
+" vim-javascript
 let g:javascript_plugin_jsdoc = 1
+
 " Fixes performance
 augroup javascript_folding
     autocmd!
@@ -470,7 +472,7 @@ let g:airline_section_y = ""
 let g:airline_theme = "custumark"
 
 " Fixes mode's width and removes useless stuff
-au! User AirlineAfterInit {
+au! User AirlineAfterInit ++once {
     const crypt = "\%\{airline#util#append\(airline#parts#crypt\(\),0\)\}"
     const iminsert = "\%\{airline#util#append\(airline#parts#iminsert\(\),0\)\}"
     g:airline_section_a = (
