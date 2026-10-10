@@ -223,6 +223,7 @@ func! EditFile()
     endif
 endfunc
 noremap <leader>t :call EditFile()<cr>
+noremap <leader>T :tabnew<cr>
 
 " Quit with Ctrl+d
 noremap <c-d> :quit<cr>
