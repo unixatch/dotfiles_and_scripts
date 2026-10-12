@@ -260,7 +260,12 @@ nnoremap !u :UndotreeToggle<cr>
 " ALE shortcuts
 noremap <leader><space> :ALEGoToImplementation<cr>
 noremap <leader><leader> :ALEFindReferences -relative<cr>
-noremap <leader>s :let inputSymbol = input("Enter a symbol: ") <bar>
-                  \ execute $"ALESymbolSearch -relative {inputSymbol}"<cr>
+func! SymbolSearch()
+    let inputSymbol = input("Enter a symbol: ")
+    if ! empty(inputSymbol)
+        execute $"ALESymbolSearch -relative {inputSymbol}"
+    endif
+endfunc
+noremap <leader>s :call SymbolSearch()<cr>
 noremap <leader>S g*:nohlsearch<cr>:ALESymbolSearch -relative <C-r>/<cr>
 
