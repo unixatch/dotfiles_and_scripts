@@ -101,34 +101,18 @@ map D ${{
             *) printf '%b' "$goTo1Line" "\e[0J" ;;
         esac
     done
-    tmpFile="$PREFIX/tmp/movedFiles"
-    printf "" > "$tmpFile"
+    green="\e[32m"; underline="\e[4m" normal="\e[0m"
+    greenTextFmt="${green}trashed$normal $underline%s$normal\n"
     for file in "${lines[@]}" ;{
         {
-            mv "$file" "$HOME/.trash/" || {
-                mvExitCode=$?
-                echo 0 >> "$tmpFile"
-                exit $mvExitCode
-            }
+            mv "$file" "$HOME/.trash/" || exit
 
-            # shellcheck disable=2059
-            [[ -e "$HOME/.trash/${file/#*\/}" ]] && echo 1 >> "$tmpFile"
+            [[ -e "$HOME/.trash/${file/#*\/}" ]] && {
+                printf "$greenTextFmt" "${file/#*\/}"
+            }
         } &
     }
-    wait -f
-    mapfile -t filesMoved < "$tmpFile"
-    count=0
-    for i in "${filesMoved[@]}" ;{
-        (( i )) && (( count++ ))
-    }
-    filesMoved="$count"
-    printf "" > "$tmpFile"
-
-    # shows how many have been trashed
-    green="\e[32m"; normal="\e[0m"
-    greenTextFmt="$green%s$normal\n"
-    printf "$greenTextFmt" "trashed $filesMoved/${#lines[@]} files"
-    read -rn 1
+    wait -f; read -rn 1
     printf '%b' "$closeAlternateBuffer" \
                 "$resetCursor"
 }}
