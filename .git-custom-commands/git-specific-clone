@@ -27,19 +27,13 @@ cd "$folder" || exit 1
 
 # Select files/folders to create
 for thing in "${thingsToCheckout[@]}" ;{
-    git sparse-checkout set "$thing"
+    git sparse-checkout set --no-cone "$thing"
 }
+branches=("${ git branch; }")
+for branch in "${branches[@]}" ;{
+    ! [[ "$branch" =~ ^\* ]] && continue
 
-# And then first try to checkout the main or master branches
-if ! git checkout main || git checkout master ;then
-    # if they're not the deafult ones
-    # check with git branch
-    branches=("${ git branch; }")
-    for branch in "${branches[@]}" ;{
-        ! [[ "$branch" =~ ^\* ]] && continue
-
-        git checkout "$branch"
-        break
-    }
-fi
+    git checkout "${branch##\* }"
+    break
+}
 
