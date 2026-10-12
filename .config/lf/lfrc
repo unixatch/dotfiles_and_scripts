@@ -34,7 +34,7 @@ map R ${{
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
-map o ${{
+cmd openFiles ${{
     # Obtain file names as an array
     mapfile -t files <<< "$fx"
     for (( i = 0; i < ${#files[@]}; ++i )) ;{
@@ -42,6 +42,8 @@ map o ${{
         [[ -f $file ]] && termux-open "$file"
     }
 }}
+map o openFiles
+map <tab> openFiles
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
 map Il ${{
