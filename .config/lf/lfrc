@@ -21,7 +21,16 @@ map j up
 map k down
 map / filter
 map _ filter
+map - toggle
 
+map R ${{
+    case "$lf_ratios" in
+        "2:1")   ratioToSet="2:3:4" ;;
+        "2:3:4") ratioToSet="2:1"   ;;
+        *) ratioToSet="1:2:3" ;;
+    esac
+    lf -remote "send set ratios $ratioToSet"
+}}
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
