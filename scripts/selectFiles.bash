@@ -5,7 +5,8 @@ _fs_usage() {
     local usage=(
         'videofile_selector [options]'
         '   Like the name implies, it shows a list of filenames available and'
-        $'   lets you select them, then returns the selected files\n'
+        '   lets you select them, then returns the selected files'
+        ""
         'Options:'
         '   -i|--incase:'
         '       makes the regex search insensitive'
