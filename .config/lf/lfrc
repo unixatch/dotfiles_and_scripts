@@ -11,7 +11,7 @@ set hidden true  # Hidden folders/files
 set drawbox true
 set icons true
 set period 2     # Reload files on screen
-set info size    # Shoe file sizes
+set info size    # Show file sizes
 set dircounts    # Show folder sizes
 set promptfmt "\033[1;34m%w\033[0m/%f"
 set incfilter true
@@ -22,6 +22,11 @@ map k down
 map / filter
 map _ filter
 map - toggle
+map ss :{{
+    set sortby size
+    set info size
+    set reverse true
+}}
 
 map R ${{
     case "$lf_ratios" in
