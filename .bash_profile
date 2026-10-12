@@ -107,8 +107,13 @@ bind -m vi-insert -x '"\C-l":"clear"'
 bind -m vi-insert -x '"\el":"clear; ls"'
 
 export usr_bin="$PREFIX/bin/"
-USER="${ id -un; }"
-export USER
+{
+    # This gets expanded by bash using "Parameter transformation"
+    # and returns the username as a result
+    : "\u"
+    printf -v USER '%s\n' "${_@P}"
+    export USER
+}
 export EDITOR="vim"
 export HISTIGNORE="giy*:git shoe*:git f:cld:c"
 export HISTFILESIZE=2500
