@@ -365,9 +365,7 @@ fun! CleanExtraSpaces()
 endfun
 
 if has("autocmd")
-    autocmd! BufWritePre 
-        \*/COMMIT_EDITMSG,*.{txt,ps1,mjs,js,py,wiki,sh,bash,coffee}
-        \ call CleanExtraSpaces()
+    autocmd! BufWritePre *.* call CleanExtraSpaces()
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -435,9 +433,9 @@ let g:ale_virtualtext_cursor = 0
 let g:ale_update_tagstack = 1
 " tsserver is default for js
 let g:ale_linters = {
-\    "javascript": ["quick-lint-js", "deno"],
-\    "markdown": ["pandoc"],
-\    "vim": ["vint"]
+\   "javascript": ["quick-lint-js", "deno"],
+\   "markdown": ["pandoc"],
+\   "vim": ["vint"]
 \}
 " vim-javascript
 let g:javascript_plugin_jsdoc = 1
