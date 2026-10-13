@@ -258,7 +258,8 @@ smap <tab> <Plug>snipMateNextOrTrigger
 nnoremap !u :UndotreeToggle<cr>
 
 " ALE shortcuts
-noremap <leader><space> :ALEGoToImplementation<cr>
+noremap <leader>d :ALEDetail <bar> set wrap!<cr>
+noremap <leader><space> <Plug>(ale_go_to_implementation)
 noremap <leader><leader> :ALEFindReferences -relative<cr>
 func! SymbolSearch()
     let inputSymbol = input("Enter a symbol: ")
