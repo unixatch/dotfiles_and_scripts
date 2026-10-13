@@ -133,11 +133,13 @@ map sd ${{
     }
     {
         echo "-------- LIST OF FILES --------"
-        du --total --human-readable "${lines[@]}" | \
-            grep \
-                --color="always" \
-                --perl-regexp \
-                '^.*\t'
+        du \
+            --dereference-args --human-readable \
+            --total "${lines[@]}" | \
+        grep \
+            --color="always" \
+            --perl-regexp \
+            '^.*\t'
         
     } | $PAGER --quit-at-eof
 
