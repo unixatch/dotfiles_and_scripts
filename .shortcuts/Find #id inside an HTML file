@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 main() {
     # --------------------- Colors --
     local esc="\033["

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 gray="\e[90m"
 normal="\e[0m"
