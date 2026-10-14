@@ -297,23 +297,22 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <C-space> ?
 
 " Smart way to move between windows
 "map <C-h> <C-W>h
 "map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
+noremap <leader>bd :Bclose<cr>:tabclose<cr>gT
 
 " Close all the buffers
-map <leader>ba :bufdo bd<cr>
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+noremap <leader>ba :bufdo bd<cr>
+noremap <leader>l :bnext<cr>
+noremap <leader>h :bprevious<cr>
 
 " Useful mappings for managing tabs
-map <leader>to :tabonly<cr>
-map <leader>tm :tabmove
+noremap <leader>to :tabonly<cr>
+noremap <leader>tm :tabmove<space>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -322,10 +321,10 @@ au! TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+noremap <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
 try
