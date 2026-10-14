@@ -94,6 +94,7 @@ noremap <silent> !n :nohlsearch<CR>
 
 " Faster esc
 inoremap ii <esc>
+inoremap II <esc>
 inoremap i8 <C-o>
 
 " function HighlightRange()
