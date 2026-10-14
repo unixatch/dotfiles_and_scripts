@@ -124,14 +124,12 @@ set undodir=~/.vim/undo_history/
 
 augroup BashFiles
     autocmd!
-    au VimEnter,WinEnter,BufRead 
-        \*.bash,
-        \*/.bash_functions,
-        \*/.bash_aliases,
-        \*/.bashrc,
-        \*/.bash_profile set foldmethod=indent | set syntax=bash
+    au VimEnter,WinEnter,BufRead */.bashrc,*.bash,*/.bash_* {
+        set foldmethod=indent
+        set syntax=bash
+    }
     " Fixes lf syntax when using bash syntax
-    au VimEnter */lfrc ++once set syntax=bash | set syntax=lf
+    au VimEnter lfrc ++once set syntax=bash | set syntax=lf
 augroup END
 
 " Enables comment-install plugin
@@ -331,17 +329,16 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
 try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
+  set switchbuf=useopen,usetab,newtab showtabline=2
 catch
 endtry
 
 " Return to last edit position when opening files (You want this!)
-au! BufReadPost * 
-    \if line("'\"") > 1 && line("'\"") <= line("$")
-        \| exe "normal! g'\""
-    \| endif
-
+au! BufReadPost * {
+    if line("'\"") > 1 && line("'\"") <= line("$")
+        execute "normal! g'\""
+    endif
+}
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -355,18 +352,22 @@ set laststatus=2
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
-" Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
-
 if has("autocmd")
-    autocmd! BufWritePre 
-        \*/COMMIT_EDITMSG,*.{txt,ps1,mjs,js,py,wiki,sh,bash,coffee}
+    " Delete trailing white space on save, useful for some filetypes ;)
+    fun! CleanExtraSpaces()
+        let save_cursor = getpos(".")
+        let old_query = getreg('/')
+        silent! %s/\s\+$//e
+        call setpos('.', save_cursor)
+        call setreg('/', old_query)
+    endfun
+
+    autocmd! BufWritePre */COMMIT_EDITMSG,*.{
+        \txt,
+        \js,mjs,mts,ts,d.ts,
+        \sh,bash,ps1,
+        \py,wiki,coffee
+    \}
         \ call CleanExtraSpaces()
 endif
 
@@ -435,9 +436,9 @@ let g:ale_virtualtext_cursor = 0
 let g:ale_update_tagstack = 1
 " tsserver is default for js
 let g:ale_linters = {
-\    "javascript": ["quick-lint-js", "deno"],
-\    "markdown": ["pandoc"],
-\    "vim": ["vint"]
+\   "javascript": ["quick-lint-js", "deno"],
+\   "markdown": ["pandoc"],
+\   "vim": ["vint"]
 \}
 " vim-javascript
 let g:javascript_plugin_jsdoc = 1
