@@ -52,25 +52,15 @@ func! DeleteAfterwardsCMDLine()
 endfunc
 
 " Opens a new tab dynamically
-" with git changes opened in less
+" with git changes opened with delta
 au VimEnter */COMMIT_EDITMSG ++once {
-    const cwd = getcwd()
-    const isStaged = "[[ -n \"${ git status --porcelain; }\" ]]"
-    const unsetAndExit = "unset HISTFILE && exit;"
     execute(":tab terminal")
 
-    # cd into the cwd and cls || exit with 1
-    # THEN show the staged changes
-    #   OR show at least the last commit's changes
-    # AFTER that exit without saving the history
+    # Disable the history and run showCommitDiff.bash then
+    # automatically close the terminal from inside the script
     call feedkeys("
-    \   cd " .. cwd .. " && cls || exit 1 \<cr>
-    \   " .. isStaged .. " && {
-    \      git dc | delta --paging always;
-    \      " .. unsetAndExit .. "
-    \   } || {
-    \      git show; " .. unsetAndExit .. "
-    \   } \<cr>
+    \    set +o history; clear;
+    \    source ~/.vim/showCommitDiff.bash \<cr>
     \")
     call feedkeys("\<C-x>:tabprevious | 1\<cr>")
     # Needed because feedkeys is async
