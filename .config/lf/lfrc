@@ -117,7 +117,7 @@ map D ${{
             }
         } &
     }
-    wait -f; read -rn 1
+    wait -f; read -p "Finished moving files" -rn 1
     printf '%b' "$closeAlternateBuffer" \
                 "$resetCursor"
 }}
