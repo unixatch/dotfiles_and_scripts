@@ -115,7 +115,7 @@ export usr_bin="$PREFIX/bin/"
     export USER
 }
 export EDITOR="vim"
-export HISTIGNORE="giy*:git shoe*:git f:cld:c"
+export HISTIGNORE="giy*:git shoe*:git f:cld:clw:c:cl:cim"
 export HISTFILESIZE=2500
 export HISTSIZE=2500
 # To keep \n
