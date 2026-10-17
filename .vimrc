@@ -54,18 +54,21 @@ endfunc
 " Opens a new tab dynamically
 " with git changes opened with delta
 au VimEnter */COMMIT_EDITMSG ++once {
-    execute(":tab terminal")
+    execute("tab terminal")
 
     # Disable the history and run showCommitDiff.bash then
     # automatically close the terminal from inside the script
     call feedkeys("
     \    set +o history; clear;
-    \    source ~/.vim/showCommitDiff.bash \<cr>
-    \")
-    call feedkeys("\<C-x>:tabprevious | 1\<cr>")
+    \    source ~/.vim/showCommitDiff.bash\<cr>"
+    \)
+    call feedkeys("\<C-x>:tabprevious\<cr>")
     # Needed because feedkeys is async
     au BufEnter */COMMIT_EDITMSG ++once
-                \ if getline(1) == "" | call feedkeys("i") | endif
+                \ call feedkeys(
+                \     getline(1) == ""
+                \         ? "\<C-home>i" : "\<C-home>"
+                \ )
 }
 
 " Small tweaks only for
@@ -73,9 +76,7 @@ au VimEnter */COMMIT_EDITMSG ++once {
 augroup CommitMessageTweaks
     autocmd!
     au WinEnter */.git/COMMIT_EDITMSG ++once {
-        const columns  = execute(":set columns?")->substitute("^.*=", "", "")
-        const maxWidth = str2nr(columns) - 20
-        &textwidth = maxWidth
+        &textwidth = &columns - 20
     }
     au BufWritePost */.git/COMMIT_EDITMSG ++once set spell
     au BufRead      */.git/COMMIT_EDITMSG ++once set noundofile
