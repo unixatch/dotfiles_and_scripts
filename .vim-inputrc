@@ -220,7 +220,7 @@ noremap <silent> <leader>e :Texplore<cr>
 func! EditFile()
     let filepath = input("Enter a file path: ", "", "file")
     if filereadable(expand(filepath))
-        execute $"normal! :tabnew {filepath}\<cr>"
+        execute $"tabnew {filepath}"
     endif
 endfunc
 noremap <leader>t :call EditFile()<cr>
@@ -259,7 +259,20 @@ smap <tab> <Plug>snipMateNextOrTrigger
 nnoremap !u :UndotreeToggle<cr>
 
 " ALE shortcuts
-noremap <leader>d :ALEDetail <bar> set wrap!<cr>
+func! ShowDetailorHover(command)
+    let prev_bufnr = bufnr()
+    execute (
+    \   a:command == "detail"
+    \       ? "ALEDetail"
+    \       : "ALEHover \<bar> sleep 50m \<bar> wincmd k"
+    \)
+
+    if prev_bufnr != bufnr()
+        set wrap!
+    endif
+endfunc
+noremap <silent> <leader>d :call ShowDetailorHover("detail")<cr>
+noremap <silent> <leader>i :call ShowDetailorHover("hover")<cr>
 noremap <leader><space> <Plug>(ale_go_to_implementation)
 noremap <leader><leader> :ALEFindReferences -relative<cr>
 func! SymbolSearch()
