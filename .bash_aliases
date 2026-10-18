@@ -19,7 +19,7 @@ alias cls='
         )"
 '
 alias cd="builtin pushd >/dev/null" p="popd >/dev/null"
-alias c="cls" l="ls"
+alias c="cls" l="ls" cim="vim"
 alias ping="ping -c 5"
 # For typos
 alias cl="cls" cld="cls" clw="cls"
@@ -29,6 +29,7 @@ alias grep="grep --color=always --perl-regexp"
 alias shred="shred --zero"
 alias rm="trash"
 alias rmdir="trash"
+alias man="qman"
 alias less="
     less \
         --ignore-case \
