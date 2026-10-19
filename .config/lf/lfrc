@@ -27,11 +27,35 @@ map ss :{{
     set info size
     set reverse true
 }}
+map sf $ffprobe -hide_banner "$f" 2>&1 | $PAGER
 # Better show where the link points to
 # (toggle: default ←→ link view)
 map sl %{{
     [[ -z $lf_rulerfile ]] && linkRuler="~/.config/lf/linkRuler"
     lf -remote "send set rulerfile '$linkRuler'"
+}}
+# Shows the output of du for the selected files/folders through $PAGER
+map sd ${{
+    mapfile -t lines <<< "$fx"
+
+    # Cleans up leading directories
+    for (( i = 0; i < ${#lines[@]}; i++ )) ;{
+        path="${lines[i]##*/}"
+        lines[i]="$path"
+    }
+    {
+        echo "-------- LIST OF FILES --------"
+        du \
+            --dereference-args --human-readable \
+            --total "${lines[@]}" | \
+        grep \
+            --color="always" \
+            --perl-regexp \
+            '^.*\t'
+
+    } | $PAGER --quit-at-eof
+
+    # Old code
 }}
 
 map R ${{
@@ -129,29 +153,6 @@ map D ${{
 }}
 
 map <enter> ${{ ! [[ -d "$f" ]] && $EDITOR "$f" }}
-map sd ${{
-    mapfile -t lines <<< "$fx"
-
-    # Cleans up leading directories
-    for (( i = 0; i < ${#lines[@]}; i++ )) ;{
-        path="${lines[i]##*/}"
-        lines[i]="$path"
-    }
-    {
-        echo "-------- LIST OF FILES --------"
-        du \
-            --dereference-args --human-readable \
-            --total "${lines[@]}" | \
-        grep \
-            --color="always" \
-            --perl-regexp \
-            '^.*\t'
-        
-    } | $PAGER --quit-at-eof
-
-    # Old code
-}}
-map sf $ffprobe -hide_banner "$f" 2>&1 | $PAGER
 map E %{{
     baseName="${f##*/}"
     dirName="${baseName%.*}"
