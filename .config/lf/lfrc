@@ -59,7 +59,7 @@ map sd ${{
 }}
 
 # ratios toggle (2:3:4 ←→ 2:1)
-map R ${{
+map R %{{
     case "$lf_ratios" in
         "2:1")   ratioToSet="2:3:4" ;;
         "2:3:4") ratioToSet="2:1"   ;;
@@ -155,7 +155,7 @@ map D ${{
             }
         } &
     }
-    wait -f; read -p "Finished moving files" -rn 1
+    wait -f; echo; read -p "Finished moving files" -rn 1
     printf '%b' "$closeAlternateBuffer" \
                 "$resetCursor"
 }}
