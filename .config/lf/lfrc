@@ -27,6 +27,12 @@ map ss :{{
     set info size
     set reverse true
 }}
+# Better show where the link points to
+# (toggle: default ←→ link view)
+map sl %{{
+    [[ -z $lf_rulerfile ]] && linkRuler="~/.config/lf/linkRuler"
+    lf -remote "send set rulerfile '$linkRuler'"
+}}
 
 map R ${{
     case "$lf_ratios" in
