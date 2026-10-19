@@ -58,6 +58,7 @@ map sd ${{
     # Old code
 }}
 
+# ratios toggle (2:3:4 ←→ 2:1)
 map R ${{
     case "$lf_ratios" in
         "2:1")   ratioToSet="2:3:4" ;;
@@ -66,9 +67,14 @@ map R ${{
     esac
     lf -remote "send set ratios $ratioToSet"
 }}
+# git shortcuts
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc %cd "$f"; git gc --aggressive
+# commands for showing/hiding a slice of a git project
+map gsi %git sparse-checkout init --no-cone
+map gso %git sparse-checkout disable
+
 cmd openFiles ${{
     # Obtain file names as an array
     mapfile -t files <<< "$fx"
@@ -91,6 +97,7 @@ map Il ${{
     }
     leaf "$f"
 }}
+# show multiple markdowns through pandoc
 map Ip ${{
     # Obtain file names as an array
     mapfile -t lines <<< "$fx"
@@ -104,6 +111,7 @@ map Ip ${{
     }
     pandoc -f gfm -t ansi <<< "${content[@]}" | less -R
 }}
+# trash function shortcut for lf
 map D ${{
     # Making sure everything is set up
     mkdir -p ~/.trash
