@@ -70,7 +70,7 @@ map R %{{
 # git shortcuts
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
-map gc %cd "$f"; git gc --aggressive
+map gc &cd "$f"; git gc --aggressive
 # commands for showing/hiding a slice of a git project
 map gsi %git sparse-checkout init --no-cone
 map gso %git sparse-checkout disable
