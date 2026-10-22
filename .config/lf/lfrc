@@ -21,7 +21,7 @@ map j up
 map k down
 map / filter
 map _ filter
-map - toggle
+map <tab> toggle
 map ss :{{
     set sortby size
     set info size
@@ -84,7 +84,7 @@ cmd openFiles ${{
     }
 }}
 map o openFiles
-map <tab> openFiles
+map - openFiles
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
 map Il ${{
@@ -161,6 +161,7 @@ map D ${{
 }}
 
 map <enter> ${{ ! [[ -d "$f" ]] && $EDITOR "$f" }}
+# Extract an archive
 map E %{{
     baseName="${f##*/}"
     dirName="${baseName%.*}"
@@ -185,7 +186,7 @@ map T $touch "$PWD/new-file"
 map i ${{
     bat \
         --chop-long-lines \
-        --pager "$PAGER" \
+        --pager "${PAGER%% *}" \
         --map-syntax '*.conf:ini' \
         "$f"
 }}
