@@ -98,8 +98,9 @@ map Il ${{
     }
     leaf "$f"
 }}
-# show multiple markdowns through pandoc
-map Ip ${{
+# show multiple formats through pandoc
+cmd pandocPrint ${{
+    formatToUse="$1"
     # Obtain file names as an array
     mapfile -t lines <<< "$fx"
     linesOfFile=() # Temporary array
@@ -110,8 +111,10 @@ map Ip ${{
         mapfile -O 1 linesOfFile < "$file"
         content+=("${linesOfFile[@]}")
     }
-    pandoc -f gfm -t ansi <<< "${content[@]}" | less -R
+    pandoc -f "$formatToUse" -t ansi <<< "${content[@]}" | $PAGER
 }}
+map Ip pandocPrint "gfm"
+map Ih pandocPrint "html"
 # trash function shortcut for lf
 map D ${{
     # Making sure everything is set up
