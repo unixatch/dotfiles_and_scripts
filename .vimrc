@@ -14,12 +14,27 @@ let &t_SI .= "\<Esc>[5 q"
 let &t_SR .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[5 q"
 
+" complete menu style tweaks:
+" - simple slim border with padding to the left and right;
+" - opacity of 95 just to not distract too much;
+" - height >30 would go over the statusline;
+" - minwidth of 25 so that it's not too slim;
+set pumopt=border:single,margin,opacity:95,width:25,height:30
+
 " Basically the default without l
 set shortmess=finxtToOS
 
 " Fixes termguicolors
 au! VimEnter * source ~/.vim-colors | set termguicolors
 au! BufRead */.vim-colors set syntax=vim
+
+" builtin man pager on K for certain filetypes
+au! FileType {sh,bash,zsh,c} {
+    runtime ftplugin/man.vim
+    legacy let g:ft_man_open_mode = 'tab'
+    legacy let g:ft_man_folding_enable = 1
+    set keywordprg=:Man
+}
 
 " Faster response after being idle
 set updatetime=500
