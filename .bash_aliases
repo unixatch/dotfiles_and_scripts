@@ -19,10 +19,10 @@ alias cls='
         )"
 '
 alias cd="builtin pushd >/dev/null" p="popd >/dev/null"
-alias c="cls" l="ls" cim="vim"
+alias c="cls" l="ls"
 alias ping="ping -c 5"
 # For typos
-alias cl="cls" cld="cls" clw="cls"
+alias cl="cls" cld="cls" clw="cls" cim="vim"
 alias giy="git" got="git"
 
 alias grep="grep --color=always --perl-regexp"
