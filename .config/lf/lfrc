@@ -75,15 +75,16 @@ map gc %cd "$f"; git gc --aggressive
 map gsi %git sparse-checkout init --no-cone
 map gso %git sparse-checkout disable
 
-cmd openFiles ${{
+cmd openFiles %{{
     # Obtain file names as an array
     mapfile -t files <<< "$fx"
     for (( i = 0; i < ${#files[@]}; ++i )) ;{
         file="${files[i]}"
-        [[ -f $file ]] && termux-open "$file"
+        [[ -f $file ]] && termux-open $1 "$file"
     }
 }}
 map o openFiles
+map O openFiles --chooser
 map - openFiles
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
