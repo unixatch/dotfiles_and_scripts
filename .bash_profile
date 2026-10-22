@@ -92,7 +92,7 @@ ${
     )
     export PAGER="${tmpPAGER[*]}"
 }
-PS2="| "
+PS2=""
 
 # shellcheck source=./.bash_shopts
 . ~/.bash_shopts
