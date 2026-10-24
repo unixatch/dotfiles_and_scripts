@@ -272,7 +272,7 @@ func! ShowDetailorHover(command)
     endif
 endfunc
 noremap <silent> <leader>w :call ShowDetailorHover("detail")<cr>
-noremap <silent> <leader>d <Plug>(ale_go_to_definition_in_tab)
+noremap <silent> <leader>d <Plug>(ale_go_to_definition_in_split)
 noremap <silent> <leader>i :call ShowDetailorHover("hover")<cr>
 noremap <leader><space> <Plug>(ale_go_to_implementation)
 noremap <leader><leader> :ALEFindReferences -relative<cr>
