@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# This script does the switch but
+# in case of local changes, it asks before using --merge
+#
+
+[[ -z $1 || $1 =~ --help|-h ]] && {
+    printf '%b\n' \
+           "Usage: git change-to [--help|-h] <branch>" \
+           "  Basically it's like doing git switch" \
+           "  but it asks if it's ok before proceeding" \
+           ""
+    exit
+}
+anyChanges="${ git status --porcelain; }"
+
+[[ -z $anyChanges ]] && {
+    git switch "$1"
+    exit
+}
+
+read -p "Do you want to switch to $1 with auto-stashing? [y|N] " -re answer
+case "$answer" in
+    y|Y)   git switch --merge "$1" ;;
+    n|N|*) printf '\e[91m%s\e[0m\n' "Quitting..." ;;
+esac
+
