@@ -17,6 +17,9 @@ ab #! #!/usr/bin/env bash<C-r>=Eatchar('\s')<cr>
 " docs checker marker
 ab #a # :ADDED: <><left><C-r>=Eatchar('\s')<cr>
 
+" Goes to the next conflict marker
+noremap <leader>cm /<<<<<<<<cr>
+
 " Change paste behaviour
 noremap p P
 noremap P p
