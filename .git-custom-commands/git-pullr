@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# gh pr checkout but with plain git in short
+#
+
+[[ -z $1 || $1 =~ --help|-h ]] && {
+    printf '%b\n' \
+           "Usage: git pullr [--help|-h] <pull_request_id> <new_local_branch>" \
+           "    It fetches a pull request from remote then" \
+           "    it creates a local branch and switches to it" \
+           ""
+    exit
+}
+for (( i = 1; i < $# + 1; ++i )) ;{
+    arg="${*:i:1}"
+    case "$arg" in
+        [0-9]*)       pullr_id="$arg"      ;;
+        [a-zA-Z-_.]*) newBranchName="$arg" ;;
+    esac
+}
+
+git fetch origin "pull/$pullr_id/head:$newBranchName"
+git change-to "$newBranchName"
+
