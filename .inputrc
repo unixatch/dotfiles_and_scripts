@@ -45,6 +45,9 @@ $if mode=vi
     set keymap vi-insert
         "\C-w": " iidBxi"
         "\C-k": kill-line
+        # Adds the ability to write multi-line commands
+        # (it's possible to go back by doing ←—)
+        "\e[1;5B": "\C-v\C-j"
     set keymap vi
 $endif
 
