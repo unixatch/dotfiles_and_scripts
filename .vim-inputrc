@@ -140,6 +140,8 @@ inoremap i8 <C-o>
 noremap - za
 noremap <C-_> zA
 
+noremap <leader>cl :call CleanExtraSpaces()<cr>
+
 " Move lines of text
 " (`z/`y means go to the saved position using the saved letter)
 " ('< = start of selection, '> = end of selection)
