@@ -51,8 +51,30 @@ inoremap nj <C-x><C-o>
 " Enable quick file completion
 inoremap np <C-x><C-f>
 
+func! SaveAndClearCmdLine(direction)
+    let currentLine = getcmdline()
+    if a:direction > 0
+        " Ctrl-k
+        let cmdline = currentLine->strcharpart(0, getcmdpos()-1)
+        let cmdlineAfterCursor = currentLine->strcharpart(getcmdpos()-1)
+        call setreg("a", cmdlineAfterCursor)
+        return cmdline
+    else
+        " Ctrl-u
+        let cmdline = currentLine->strcharpart(0, getcmdpos()-1)
+        call setreg("a", cmdline)
+        return currentLine->strcharpart(getcmdpos()-1)
+    endif
+endfunc
+
+" Ctrl-u but it also saves what it deletes
+cnoremap <C-u> <C-\>e SaveAndClearCmdLine(0)<CR><home>
+
 " Implements Ctrl-k (readline's kill-line) on the command line
-cnoremap <C-k> <C-\>e getcmdline()->strcharpart(0, getcmdpos()-1)<CR>
+cnoremap <C-k> <C-\>e SaveAndClearCmdLine(1)<CR>
+
+" Just pastes register a, like bash's readline
+cnoremap <C-y> <C-r>a
 
 " Quick dictionary completion
 let nkUsed = 0
