@@ -99,7 +99,7 @@ augroup END
 
 " Only for edit-and-execute-command
 au BufRead */usr/tmp/bash-fc.* ++once {
-    if getline("1") =~ "^node -e"
+    if getline(1) =~ "^node -e"
         set filetype=javascript
     else
         set filetype=bash
