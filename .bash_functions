@@ -735,4 +735,28 @@ d() {
 
     printf '%b\n' "${list[@]}"
 }
+showGithubFile() {
+    # Meant to be used with URLs such as
+    #   https://github.com/<user>/<repo_name>/blob/<branch>/<file_path>
+    [[ -z $1 || $1 =~ --help|-h ]] && {
+        printf '%s\n' \
+               "Usage: showGithubFile [--help|-h] <github_url_to_file> [language_name]"
+        return 1
+    }
+    [[ ! $1 =~ ^https:\/\/ ]] && {
+        printf "\e[31m%s\e[0m\n" "URL needed"
+        return 2
+    }
+
+    # <user>/<repo_name>/blob/<branch>/<path>
+    local rawURL="${1//*github\.com\/}"
+    # like above but blob/ → refs/heads/
+    rawURL="${rawURL//blob/refs\/heads}"
+    # complete url
+    rawURL="https://raw.githubusercontent.com/$rawURL"
+
+    # If no second argument has been passed,
+    # it tries to guess the language by using the extension
+    curl --silent "$rawURL" | bat --language "${2:-${rawURL//*.}}"
+}
 
