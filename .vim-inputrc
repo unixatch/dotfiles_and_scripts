@@ -77,20 +77,20 @@ cnoremap <C-k> <C-\>e SaveAndClearCmdLine(1)<CR>
 cnoremap <C-y> <C-r>a
 
 " Quick dictionary completion
-let nkUsed = 0
-func UseNK()
-    let g:nkUsed = 1
+let nlUsed = 0
+func UseNL()
+    let g:nlUsed = 1
     set spell completeopt+=noselect
     call feedkeys("\<C-x>\<C-k>")
     return ""
 endfunc
 au CompleteDone * {
    set completeopt-=noselect
-   if g:nkUsed && expand("%") !~ ".*/COMMIT_EDITMSG"
-       g:nkUsed = 0 | set nospell
+   if g:nlUsed && expand("%") !~ ".*/COMMIT_EDITMSG"
+       g:nlUsed = 0 | set nospell
    endif
 }
-inoremap <expr> nk UseNK()
+inoremap <expr> nl UseNL()
 " End of dictionary completion
 
 " Toggle spelling or paste mode
