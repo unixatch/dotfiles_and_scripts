@@ -682,6 +682,7 @@ showVideoMetadataInFile() {
     (( ! $# )) || [[ $* =~ --help|-h ]] && {
         printf '%s\n' \
                "Usage: showVideoMetadataInFile [d|D|t|description|duration|title] <filename>" \
+               "    purl|page-url: shows the page's URL" \
                "    d|description: shows the description;" \
                "    D|duration:    shows the duration;" \
                "    t|title:       shows the title + artist;"
@@ -689,10 +690,12 @@ showVideoMetadataInFile() {
     }
 
     local keyword paging="false"
+    # shellcheck disable=2016
     case "$1" in
-        D|duration)    keyword="\$Duration" ;;
-        t|title)       keyword="\$Title [\$Artist]" ;;
-        d|description) keyword="\$Description"; paging="true" ;;
+        purl|page-url) keyword='$Purl' ;;
+        D|duration)    keyword='$Duration' ;;
+        t|title)       keyword='$Title [$Artist]' ;;
+        d|description) keyword='$Description'; paging="true" ;;
     esac
     $paging && {
         exiftool -printFormat "$keyword" "$2" | $PAGER
