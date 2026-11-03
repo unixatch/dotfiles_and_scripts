@@ -190,7 +190,7 @@ map T $touch "$PWD/new-file"
 map i ${{
     bat \
         --chop-long-lines \
-        --pager "${PAGER%% *}" \
+        --paging always --pager "${PAGER%% *}" \
         --map-syntax '*.conf:ini' \
         "$f"
 }}
