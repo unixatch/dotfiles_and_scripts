@@ -87,13 +87,20 @@ getPIDAndWait
 # normal packages
 printf "\n$BOLD${Red}%s$NORMAL:\n\n" 'pkg/apt-get'
 
-echo -e "${Gray}upgrade$NORMAL"
+echo -e "${Gray}update/upgrade$NORMAL"
 pkg upgrade -y &
 getPIDAndWait
 
-printf "\n${Gray}%s$NORMAL\n" 'auto-clean && auto-remove'
-apt-get -y auto-clean && apt-get -y auto-remove &
-getPIDAndWait
+# Maybe clean up the cache and orphaned packages after 3 days
+read -r last_apt_cache_clean < ~/.apt_cache_clean_time
+
+if (( EPOCHSECONDS - last_apt_cache_clean > 60**2 * (24 * 3) )) ;then
+    printf "\n${Gray}%s$NORMAL\n" 'auto-clean && auto-remove'
+    apt-get -y auto-clean && apt-get -y auto-remove &
+    getPIDAndWait
+
+    echo $EPOCHSECONDS > ~/.apt_cache_clean_time
+fi
 
 termux-wake-unlock
 termux-toast -b "black" "Finito di aggiornare Termux" &
