@@ -424,6 +424,7 @@ let g:ale_update_tagstack = 1
 
 " tsserver is default for js
 let g:ale_linters = {
+\   "sh": ["shellcheck", "bash-language-server"],
 \   "javascript": ["quick-lint-js", "deno"],
 \   "typescript": ["tsc"],
 \   "markdown": ["pandoc"],
@@ -508,6 +509,7 @@ call plug#begin()
     " Same for markdown + other niceties
     Plug 'preservim/vim-markdown', { 'for': 'markdown' }
     Plug 'vim-python/python-syntax', { 'for': 'python' }
+    Plug 'teal-language/vim-teal', { 'for': 'teal' }
     " Indentation detection plugin
     Plug 'tpope/vim-sleuth'
     "Plug 'lverweijen/vim-irreplaceable'
