@@ -68,6 +68,25 @@ map R %{{
     lf -remote "send set ratios $ratioToSet"
 }}
 # git shortcuts
+map gr ${{
+    saveCursor='\e7'
+    resetCursor='\e8'
+    openAlternateBuffer='\e[?1049h'
+    closeAlternateBuffer='\e[?1049l'
+    goTo1Line='\e[H'
+
+    printf '%b' "$saveCursor" \
+                "$openAlternateBuffer" \
+                "$goTo1Line"
+
+    read -p 'Search pattern: ' pattern
+    git grep -C 3 "$pattern" \
+        | delta --color-only \
+        | bat --decorations never
+
+    printf '%b' "$closeAlternateBuffer" \
+                "$resetCursor"
+}}
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
 map gc &cd "$f"; git gc --aggressive
