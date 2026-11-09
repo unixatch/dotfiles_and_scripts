@@ -304,6 +304,8 @@ noremap <silent> <leader>d <Plug>(ale_go_to_definition_in_split)
 noremap <silent> <leader>i :call ShowDetailorHover("hover")<cr>
 noremap <leader><space> <Plug>(ale_go_to_implementation)
 noremap <leader><leader> :ALEFindReferences -relative<cr>
+noremap [a <Plug>(ale_previous_wrap_error)
+noremap ]a <Plug>(ale_next_wrap_error)
 noremap <leader>q :ALEPopulateQuickfix <bar> wincmd j <bar> normal tt<cr>
 func! SymbolSearch()
     let inputSymbol = input("Enter a symbol: ")
