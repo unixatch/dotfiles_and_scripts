@@ -306,7 +306,43 @@ noremap <leader><space> <Plug>(ale_go_to_implementation)
 noremap <leader><leader> :ALEFindReferences -relative<cr>
 noremap [a <Plug>(ale_previous_wrap_error)
 noremap ]a <Plug>(ale_next_wrap_error)
-noremap <leader>q :ALEPopulateQuickfix <bar> wincmd j <bar> normal tt<cr>
+
+" Smarter way to manage the ALEPopulateQuickfix command
+func ShowAleQuickFixList()
+    if !exists("g:ale_quickfix_open")
+        ALEPopulateQuickfix
+    endif
+
+    " Normal search
+    for win in getwininfo()
+        if !win.quickfix | continue | endif
+
+        " Exists an open quickfix window
+        " When ALE opens a new horizontal window
+        if gettabinfo(win.tabnr)[0].windows->len() == 2
+            let g:ale_quickfix_open = 1
+            execute(":wincmd j \<bar> normal tt")
+        else
+            " tab exists
+            execute($"normal! {win.tabnr}gt")
+            ALEPopulateQuickfix
+        endif
+        return
+    endfor
+
+    " Maybe there's an hidden quickfix buffer
+    for buf in getbufinfo()
+        let bufnr = buf.bufnr
+        if bufwinnr(bufnr) != -1 | continue | endif
+
+        if getbufvar(bufnr, "&filetype") == "qf"
+            execute($":tab sb {bufnr}")
+            ALEPopulateQuickfix
+            break
+        endif
+    endfor
+endfunc
+noremap <leader>q :call ShowAleQuickFixList()<cr>
 func! SymbolSearch()
     let inputSymbol = input("Enter a symbol: ")
     if ! empty(inputSymbol)
