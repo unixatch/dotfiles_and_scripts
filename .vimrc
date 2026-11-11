@@ -92,6 +92,7 @@ augroup CommitMessageTweaks
     autocmd!
     au WinEnter */.git/COMMIT_EDITMSG ++once {
         &textwidth = &columns - 20
+        &shiftwidth = 2
     }
     au BufWritePost */.git/COMMIT_EDITMSG ++once set spell
     au BufRead      */.git/COMMIT_EDITMSG ++once set noundofile
