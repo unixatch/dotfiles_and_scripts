@@ -310,7 +310,7 @@ map <space> /
 "map <C-l> <C-W>l
 
 " Close the current buffer
-noremap <leader>bd :Bclose<cr>:tabclose<cr>gT
+noremap <leader>bd :Bclose<cr>:tabclose<cr>
 
 " Close all the buffers
 noremap <leader>ba :bufdo bd<cr>
