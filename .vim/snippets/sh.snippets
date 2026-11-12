@@ -1,0 +1,36 @@
+snippet func
+	$1() {
+		$0
+	}
+snippet case
+	case $1 in
+		$2)
+			$0
+		;;
+	esac
+snippet forin
+	for $1 in "$2" ;do
+		$0
+	done
+snippet [
+	[ $1 ] && {
+		$0
+	}
+snippet test
+	test $1 && {
+		$0
+	}
+snippet if
+	if $1 ;then
+		$0
+	fi
+snippet echo
+snippet echoe
+	echo "$0"
+snippet printf
+	printf '$0' "$1"
+snippet wr
+	while read -r line ;do
+		$0
+	done
+
