@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Initialisation
 shopt -s expand_aliases
 cd ~/storage/downloads/ || exit 1
 saveCursor='\e7'
@@ -9,6 +10,8 @@ closeAlternateBuffer='\e[?1049l'
 goTo1Line='\e[H'
 # shellcheck source=../.bash_aliases
 source ~/.bash_aliases
+
+# Prepare for reading URLs
 listOfUrls=()
 readParams=(
     "-p" "URL: " "-e" "-n" "28"
@@ -47,11 +50,29 @@ while readOrTimeout ;do
     [[ -z "$URL" ]] && break
 done
 
+# Downloading part
 {
     printf '%s\n' "#$EPOCHSECONDS" "yt-dlp ${listOfUrls[*]}"
 } >> ~/.bash_history &
+
+sleepHandler() {
+    kill -s SIGSTOP "$1"
+    printf "\r\e[K\e[90mPress anything to wake up the process...\e[0m"
+    read -rn 1
+    kill -s SIGCONT "$1"
+    echo
+}
 # -s → Disables any kind of echoing from stdin
-yt-dlp "${listOfUrls[@]}"
+yt-dlp "${listOfUrls[@]}" &
+CURRENT_SUB_PROCESS=$!
+trap 'sleepHandler $CURRENT_SUB_PROCESS' SIGTSTP
+
+# Keep waiting until everything has finished
+while [[ -n ${ jobs -l; } ]]; do
+    wait -f
+done
+trap - SIGTSTP
+
 printf "\n\x1b[33;1;4m%s\x1b[0m" 'Download finished'
 termux-media-scan ~/storage/downloads/ &>/dev/null &
 wait
