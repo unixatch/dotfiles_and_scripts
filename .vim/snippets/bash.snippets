@@ -1,13 +1,5 @@
-snippet func
-	$1() {
-		$0
-	}
-snippet case
-	case $1 in
-		$2)
-			$0
-		;;
-	esac
+extends "sh.snippets"
+
 snippet fora
 	for (( i = 0; i < $1; ++i )) ;{
 		$0
@@ -24,14 +16,6 @@ snippet ((
 	(( $1 )) && {
 		$0
 	}
-snippet if
-	if $1 ;then
-		$0
-	fi
-snippet echo
-	echo "$0"
-snippet printf
-	printf '$0' "$1"
 snippet dec
 	declare -p ${0}
 snippet mapfile
