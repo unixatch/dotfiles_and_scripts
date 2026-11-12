@@ -57,10 +57,10 @@ done
 
 sleepHandler() {
     kill -s SIGSTOP "$1"
-    printf "\r\e[K\e[90mPress anything to wake up the process...\e[0m"
+    printf "\n\e[90mPress anything to wake up the process...\e[0m"
     read -rn 1
     kill -s SIGCONT "$1"
-    echo
+    printf "\r\e[K"
 }
 # -s → Disables any kind of echoing from stdin
 yt-dlp "${listOfUrls[@]}" &
