@@ -440,6 +440,11 @@ augroup javascript_folding
     au FileType javascript setlocal foldmethod=indent
 augroup END
 
+" Use ale's builtin completion for typescript
+au! FileType typescript ++once {
+    set omnifunc=ale#completion#OmniFunc
+}
+
 " GitGutter
 let g:gitgutter_map_keys = 0
 let g:gitgutter_highlight_linenrs = 1
