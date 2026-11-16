@@ -444,6 +444,9 @@ augroup END
 au! FileType typescript ++once {
     set omnifunc=ale#completion#OmniFunc
 }
+" tsc-go's custom linter doesn't trigger ALELint
+" so this is needed
+au CursorHold *.{d.ts,d.mts,ts,mts,cts,d.cts} ALELint
 
 " GitGutter
 let g:gitgutter_map_keys = 0
