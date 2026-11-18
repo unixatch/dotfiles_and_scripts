@@ -446,7 +446,7 @@ au! FileType typescript ++once {
 }
 " tsc-go's custom linter doesn't trigger ALELint
 " so this is needed
-au CursorHold *.{d.ts,d.mts,ts,mts,cts,d.cts} ALELint
+" au CursorHold *.{d.ts,d.mts,ts,mts,cts,d.cts} ALELint
 
 " GitGutter
 let g:gitgutter_map_keys = 0
