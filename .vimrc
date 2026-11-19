@@ -530,4 +530,6 @@ call plug#end()
 " All my keybindings
 autocmd BufRead .vim-inputrc set filetype=vim
 source ~/.vim-inputrc
+" Reminder for these options
+" set exrc secure thesaurus
 
