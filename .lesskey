@@ -1,3 +1,5 @@
 #command
     \  forw-search
+    j back-line
+    k forw-line
 
