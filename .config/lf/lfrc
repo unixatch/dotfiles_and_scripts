@@ -78,14 +78,25 @@ map gr ${{
     printf '%b' "$saveCursor" \
                 "$openAlternateBuffer" \
                 "$goTo1Line"
+    trap "{
+        printf '%b' '$closeAlternateBuffer' \
+                    '$resetCursor'
+    }" EXIT
 
-    read -p 'Search pattern: ' pattern
-    git grep -C 3 "$pattern" \
+    # Gets the search term
+    read -rep 'Search pattern: ' pattern
+
+    # Checks if anything matches
+    grepOutput="${ git grep -C 3 --color=always "$pattern"; }"
+    [[ -z $grepOutput ]] && {
+        read -n 1 -rp "No matches found"
+        exit 1
+    }
+
+    # Found something, prettify the output to a pager
+    printf '%b' "$grepOutput" \
         | delta --color-only \
-        | bat --decorations never
-
-    printf '%b' "$closeAlternateBuffer" \
-                "$resetCursor"
+        | bat --decorations never --paging always
 }}
 map gp %cd "$f"; git pull
 map gl $cd "$f"; git l
