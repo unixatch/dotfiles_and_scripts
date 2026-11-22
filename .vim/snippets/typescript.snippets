@@ -8,4 +8,9 @@ snippet //*
 	/** ${0} */
 snippet decf
 	declare function(${0});
+snippet showType
+	type check = {
+	  [K in keyof ${1}]: ${0:$1}[K]
+	}
+
 
