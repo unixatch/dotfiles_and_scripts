@@ -762,4 +762,19 @@ showGithubFile() {
     # it tries to guess the language by using the extension
     curl --silent "$rawURL" | bat --language "${2:-${rawURL//*.}}"
 }
+showTSErrorFileList() {
+    local regex='Found [0-9]+ errors in [0-9]+ files.' foundIt
+
+    while read -r line ;do
+        case "$foundIt" in
+            "true") printf '%b\n' "$line" ;;
+            *)
+                [[ $line =~ $regex ]] && {
+                    foundIt="true"
+                    printf '\n%b\n' "$line"
+                }
+            ;;
+        esac
+    done < <(tsc --pretty)
+}
 
