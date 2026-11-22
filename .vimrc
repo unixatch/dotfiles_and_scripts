@@ -423,6 +423,8 @@ let g:ale_set_signs = v:false
 let g:ale_virtualtext_cursor = 0
 let g:ale_update_tagstack = 1
 let g:ale_lsp_suggestions = 1
+let g:ale_python_ruff_use_global = 1
+let g:ale_python_ruff_human_readable = 1
 
 " tsserver is default for js
 let g:ale_linters = {
