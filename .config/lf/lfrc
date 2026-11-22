@@ -87,7 +87,12 @@ map gr ${{
     read -rep 'Search pattern: ' pattern
 
     # Checks if anything matches
-    grepOutput="${ git grep -C 3 --color=always "$pattern"; }"
+    grepOutput="${
+        git grep \
+            --ignore-case \
+            --context 3 \
+            --color=always "$pattern"
+    }"
     [[ -z $grepOutput ]] && {
         read -n 1 -rp "No matches found"
         exit 1
