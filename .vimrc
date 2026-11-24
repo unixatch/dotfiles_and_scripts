@@ -131,10 +131,9 @@ set undodir=~/.vim/undo_history/
 
 augroup BashFiles
     autocmd!
-    au VimEnter,WinEnter,BufRead */.bashrc,*.bash,*/.bash_* {
-        set foldmethod=indent
-        set syntax=bash
-    }
+    au VimEnter,WinEnter,BufRead .bashrc,*.bash{,_*}
+        \ set foldmethod=indent filetype=bash
+
     " Fixes lf syntax when using bash syntax
     au VimEnter lfrc ++once set syntax=bash | set syntax=lf
 augroup END
