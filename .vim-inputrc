@@ -308,6 +308,12 @@ noremap <leader><leader> :ALEFindReferences -relative<cr>
 noremap [a <Plug>(ale_previous_wrap_error)
 noremap ]a <Plug>(ale_next_wrap_error)
 
+" git grep but as a quickfix list (vim-fugitive's implementation)
+noremap <silent> gs :execute
+            \ "Ggrep -q --context 5 --show-function "..
+                \input('Search pattern: ')
+            \ .."\<bar> wincmd j \<bar> normal tt"<cr>
+
 " Smarter way to manage the ALEPopulateQuickfix command
 func ShowAleQuickFixList()
     if !exists("g:ale_quickfix_open")
