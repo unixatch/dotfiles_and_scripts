@@ -417,11 +417,6 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunc
 
-" SnipMate
-let g:snipMate = {}
-let g:snipMate.scope_aliases = {}
-let g:snipMate.scope_aliases['bash'] = "sh,bash"
-
 " ALE
 let g:ale_set_signs = v:false
 let g:ale_virtualtext_cursor = 0
