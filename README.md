@@ -17,6 +17,9 @@ These are my personal configurations for many commands and bash
     3. .bashrc → .bash_profile;
     4. .bash_shopts: shopt options for bash;
 
+- scripts/:
+    1. selectFiles.bash: video file selector;
+
 ## Miscellaneous files/folders
 
 - .lesskey: less' input settings;
@@ -24,7 +27,10 @@ These are my personal configurations for many commands and bash
 - .inputrc: readline's config;
 - .lynxrc;
 
+- .config/: folder containing program's configurations;
 - .git-custom-commands/:
     command scripts that mainly address
     missing functionality from git from time to time;
+
+[LICENSE](./LICENSE)
 
