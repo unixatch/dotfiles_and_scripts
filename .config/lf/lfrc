@@ -233,10 +233,12 @@ map M $mkdir "$PWD/new-dir"
 map T $touch "$PWD/new-file"
 
 map i ${{
+    [[ ${f##*/} == "lfrc" ]] && language=("--language" "bash")
+
     bat \
         --chop-long-lines \
         --paging always --pager "${PAGER%% *}" \
-        --map-syntax '*.conf:ini' \
+        --map-syntax '*.conf:ini' ${language[@]} \
         "$f"
 }}
 
