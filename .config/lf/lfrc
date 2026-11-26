@@ -127,7 +127,7 @@ map O openFiles --chooser
 map - openFiles
 map Im $mpv --vo=tct --vid=1 "$f" 2>/dev/null
 map L $ln -s "$f" "${f##*/}.lnk"
-map Il ${{
+cmd runLeaf ${{
     # Obtain file names as an array
     mapfile -t lines <<< "$fx"
 
@@ -135,8 +135,14 @@ map Il ${{
         leaf "${ pwd; }"
         exit
     }
-    leaf "$f"
+    [[ $1 == "normal" ]] && {
+        leaf "$f"
+        exit
+    }
+    leaf --inline ansi "$f" | $PAGER
 }}
+map Il runLeaf
+map IL runLeaf "normal"
 # show multiple formats through pandoc
 cmd pandocPrint ${{
     formatToUse="$1"
