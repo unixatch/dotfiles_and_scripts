@@ -67,15 +67,15 @@ alias terminfo="less ~/terminfo.txt"
 # with a normal filename for yt-dlp
 alias yt-dlp="
     'yt-dlp' \
+        --ignore-errors \
         --output '%(title)s [%(uploader)s].%(ext)s' \
         --embed-metadata --write-automatic-subs --embed-subs \
         --format-sort='width:1920,height:1080,fps:30' \
         --sponsorblock-remove sponsor,selfpromo,interaction \
-        --sleep-subtitles 1.1 --sleep-requests 1.1 \
+        --sleep-subtitles 0.6 --sleep-requests 0.6 \
         --sleep-interval 0.2 --max-sleep-interval 0.5 \
         --concurrent-fragments 8 \
 "
-alias yt-dlp-no-subs="yt-dlp --no-embed-subs --no-write-automatic-subs"
 # Best audio format for yt-dlp
 alias yt-dlp-audio="
     yt-dlp \
