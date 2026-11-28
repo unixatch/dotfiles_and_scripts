@@ -366,7 +366,7 @@ videofile_selector() {
 
     # Confirmation prompt
     local doIt="false" back="false" answer
-    while read -p "Use file [y|n|b]? " -r answer ;do
+    while read -p "Use file/s [y|n|b]? " -r answer ;do
         case "$answer" in
             y|Y|s|S) doIt="true"; break ;;
             n|N)     break ;;
