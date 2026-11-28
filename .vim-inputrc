@@ -298,6 +298,12 @@ func! ShowDetailorHover(command)
     if prev_bufnr != bufnr()
         set wrap!
     endif
+    " Adds coloring to
+    " the god awful typescript errors
+    " even if it's not perfect, it's better than default
+    if &filetype == "ale-preview" && getline(".") =~ '^\[ts\]'
+        set syntax=javascript
+    endif
 endfunc
 noremap <silent> <leader>w :call ShowDetailorHover("detail")<cr>
 noremap <silent> <leader>d <Plug>(ale_go_to_definition_in_split)
