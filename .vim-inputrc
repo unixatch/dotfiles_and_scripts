@@ -297,7 +297,7 @@ func! ShowDetailorHover(command)
     \)
 
     if prev_bufnr != bufnr()
-        set wrap!
+        setlocal wrap!
     endif
     if ftype != "typescript" | return "" | endif
 
