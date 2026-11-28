@@ -288,6 +288,7 @@ nnoremap !u :UndotreeToggle<cr>
 
 " ALE shortcuts
 func! ShowDetailorHover(command)
+    let ftype      = &filetype
     let prev_bufnr = bufnr()
     execute (
     \   a:command == "detail"
@@ -298,12 +299,17 @@ func! ShowDetailorHover(command)
     if prev_bufnr != bufnr()
         set wrap!
     endif
+    if ftype != "typescript" | return "" | endif
+
     " Adds coloring to
     " the god awful typescript errors
     " even if it's not perfect, it's better than default
-    if &filetype == "ale-preview" && getline(".") =~ '^\[ts\]'
-        set syntax=javascript
+    if getline(".") =~ '^\[ts\]'
+        setlocal syntax=javascript
+        return ""
     endif
+    " When ALEDetail is used for typescript
+    setlocal syntax=typescript
 endfunc
 noremap <silent> <leader>w :call ShowDetailorHover("detail")<cr>
 noremap <silent> <leader>d <Plug>(ale_go_to_definition_in_split)
